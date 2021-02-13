@@ -81,7 +81,7 @@ public class Registros {
      * @param aux string para comparar con los numeros de historiales clinicos y encontrar la que se busca
      * @return String
      */
-    public String buscarHistoria(String aux){
+    /*public String buscarHistoria(String aux){
         String msj = "\n";
         for (int i = 0; i < listaH.size(); i++) {
             if(listaH.get(i).getNroHistoria()== aux){
@@ -89,5 +89,5 @@ public class Registros {
             }
         }
         return msj;
-    }
+    }*/
 }

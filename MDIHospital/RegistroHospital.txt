@@ -21,3 +21,5 @@
 3232;2/2/2021;migraña;7894561245;facebook;4567981245;A;Vacunacion;5000.0
 12343;2/2/2021;prueba bd;01245778844;dirreccionnnn;1324567898;C;Vacunacion;20000.0
 3412122;2/2/2021;labsprueba;3124325435546;adsdadsddddwww;4344343443;S;Laboratorios;0.0
+3;13/2/2021;Camilo Torres;100024578;Cra Cra 9;2301457888;A;Vacunacion;5000.0
+4;13/2/2021;Camilo Huena;123456789;cra cra cra;1239876514;B;Vacunacion;10000.0

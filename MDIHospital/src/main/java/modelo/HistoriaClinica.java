@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
  * @author dadxc
  */
 public class HistoriaClinica {
-    private String NroHistoria;
+    private int NroHistoria;
     private Fecha fecha;
     private Paciente dtsPaciente;
     private Servicio dtsServicio;
@@ -25,7 +25,7 @@ public class HistoriaClinica {
      * @param dtsPaciente datos del paciente de la historia clinica
      * @param dtsServicio datos del servicio de la historia clinica
      */
-    public HistoriaClinica(String NroHistoria, Fecha fecha, Paciente dtsPaciente, Servicio dtsServicio) {
+    public HistoriaClinica(int NroHistoria, Fecha fecha, Paciente dtsPaciente, Servicio dtsServicio) {
         this.NroHistoria = NroHistoria;
         this.fecha = fecha;
         this.dtsPaciente = dtsPaciente;
@@ -36,7 +36,7 @@ public class HistoriaClinica {
      *Constructor basco
      */
     public HistoriaClinica() {
-        this.NroHistoria = "";
+        this.NroHistoria = 0;
         this.fecha = new Fecha();
     }
 
@@ -44,7 +44,7 @@ public class HistoriaClinica {
      *retonra el numero de la historia clinica
      * @return String
      */
-    public String getNroHistoria() {
+    public int getNroHistoria() {
         return NroHistoria;
     }
 
@@ -53,15 +53,9 @@ public class HistoriaClinica {
      * @param NroHistoria numero de la historia clinica
      * @throws modelo.FormatoEntradaExcepcion excepción nulo
      */
-    public void setNroHistoria(String NroHistoria) throws FormatoEntradaExcepcion {
-        if(NroHistoria.equals(""))
-        {
-            throw new FormatoEntradaExcepcion(101);
-        }
-        else
-        {
+    public void setNroHistoria(int NroHistoria) throws FormatoEntradaExcepcion {
            this.NroHistoria = NroHistoria; 
-        }
+        
     }
 
     /**

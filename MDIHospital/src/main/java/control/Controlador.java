@@ -54,6 +54,7 @@ public class Controlador implements ActionListener, Runnable {
         frmPrincipal.getPndEscritorio().add(frmRegistrar);
         frmPrincipal.getPndEscritorio().add(frmExamenes);
         frmPrincipal.getPndEscritorio().add(frmConsultar);
+        this.frmPrincipal.getOpcmMedico().addActionListener(this);
         this.frmPrincipal.getOpcmRegistrar().addActionListener(this);
         this.frmPrincipal.getOpcmConsultar().addActionListener(this);
         this.frmPrincipal.getOpcmSalir().addActionListener(this);
@@ -66,6 +67,10 @@ public class Controlador implements ActionListener, Runnable {
         this.frmExamenes.getBtnGrupo().add(frmExamenes.getBtnOptometria());
         this.frmExamenes.getBtnGrupo().add(frmExamenes.getBtnOdontologia());
         this.frmExamenes.getBtnGrupo().add(frmExamenes.getBtnCorprologico());
+        this.frmPrincipal.getBtnBuscar().addActionListener(this);
+        this.frmPrincipal.getBtnConsultar().addActionListener(this);
+        this.frmPrincipal.getBtnConsultarHistoria().addActionListener(this);
+        this.frmPrincipal.getBtnRegistrar().addActionListener(this);
         examenes = new ArrayList<Examen>();
         auxH = new Hospitalizacion();
         auxL = new Laboratorios();
@@ -91,10 +96,12 @@ public class Controlador implements ActionListener, Runnable {
      */
     @Override
     public void actionPerformed(ActionEvent ae) {
-        if(ae.getSource() == frmPrincipal.getOpcmRegistrar()){
+        if(ae.getSource() == frmPrincipal.getOpcmRegistrar()  || ae.getSource() == frmPrincipal.getBtnRegistrar()){
+            frmConsultar.getTblConsulta().setModel(conexionbd.consultar());
+            frmRegistrar.getTxtNro().setText(String.valueOf(frmConsultar.getTblConsulta().getRowCount() + 1));
             abrirVentana(frmRegistrar);
         }
-        if(ae.getSource() == frmPrincipal.getOpcmConsultar()){
+        if(ae.getSource() == frmPrincipal.getOpcmConsultar()){//{
             //try {
                 frmConsultar.getTblConsulta().setModel(conexionbd.consultar());
                 //agregarDatos(frmConsultar.getTblConsulta());
@@ -126,7 +133,7 @@ public class Controlador implements ActionListener, Runnable {
                 Fecha fecha = new Fecha(Integer.parseInt(frmRegistrar.getTxtDia().getText()),Integer.parseInt(frmRegistrar.getTxtMes().getText()),Integer.parseInt(frmRegistrar.getTxtAno().getText()));
                 //se divio en vez de usar el parametrico para poder controlar las excepciones
                 
-                historia.setNroHistoria(frmRegistrar.getTxtNro().getText());
+                historia.setNroHistoria(Integer.parseInt(frmRegistrar.getTxtNro().getText()));
                 historia.setFecha(fecha);
                 //objR.getListaH().add(new HistoriaClinica(frmRegistrar.getTxtNro().getText(),
                                                  //fecha,
@@ -372,7 +379,9 @@ public class Controlador implements ActionListener, Runnable {
                     String msj = datos(objR.getListaH().size()-1);
                     conexionbd.setObjH(historia);
                     String insertar = conexionbd.insertar();
+                    String insertar2 = conexionbd.insertar2();
                     System.out.println(insertar);
+                    System.out.println(insertar2);
                     con.EscribeDatos(msj, "RegistroHospital.txt");
                     pdf.crear_PDF(historia);
                     JOptionPane.showMessageDialog(frmPrincipal, "Historia Clinica Registrada");
@@ -446,6 +455,12 @@ public class Controlador implements ActionListener, Runnable {
             JOptionPane.showMessageDialog(frmConsultar, "Error al abrir el archivo");
         }
         frmExamenes.setVisible(false); 
+     }
+     if(ae.getSource() == frmPrincipal.getOpcmMedico())
+     { 
+        String med = JOptionPane.showInputDialog(frmPrincipal, "Nombre médico");
+        String data = conexionbd.insertarMedico(med);
+        JOptionPane.showMessageDialog(frmPrincipal, data);
      }
     }
     
@@ -614,6 +629,7 @@ public class Controlador implements ActionListener, Runnable {
         return msj;
     }
 
+    @Override
     public void run() {
         try {
             while(hilo1 == Thread.currentThread())

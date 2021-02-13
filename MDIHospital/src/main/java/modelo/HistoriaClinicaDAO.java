@@ -10,6 +10,8 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -73,7 +75,7 @@ public class HistoriaClinicaDAO {
             conexion.conectar();
             String comando = "insert into historias_clinicas values(?,?,?,?,?,?,?,?,?)";
             consulta = conexion.getConexion().prepareStatement(comando);
-            consulta.setString(1, objH.getNroHistoria());
+            consulta.setString(1, String.valueOf(objH.getNroHistoria()));
             consulta.setString(2, objH.getFecha().toString());
             consulta.setString(3, objH.getDtsPaciente().getNombre());
             consulta.setString(4, objH.getDtsPaciente().getIdentificacion());
@@ -112,6 +114,96 @@ public class HistoriaClinicaDAO {
         return msj;
     }
 
+    public String insertarMedico(String nombre)
+    {
+        String msj = "";
+        
+        try {
+            ConexionBD conexion = new ConexionBD();
+            PreparedStatement consulta = null;
+            conexion.conectar();
+            String comando = "insert into medico (nombre) values(?)";
+            consulta = conexion.getConexion().prepareStatement(comando);
+            consulta.setString(1, nombre);
+            consulta.execute();
+            msj = "Registro exitoso";
+            consulta.close();
+            conexion.getConexion().close();
+        } catch (SQLException ex) {
+            msj = "Error al ingreso de datos" + ex.toString();
+        }
+        
+        return msj;
+    }
+    
+    //metodo que devuelva un nuemro aleatorio de medico
+    
+    public String insertar2()
+    {
+        String msj="";
+        try
+        {
+            ConexionBD conexion = new ConexionBD();
+            PreparedStatement consulta = null;
+            conexion.conectar();
+            String comando = "insert into paciente values(?,?,?,?,?)";
+            consulta = conexion.getConexion().prepareStatement(comando);
+            consulta.setInt(1, Integer.parseInt(objH.getDtsPaciente().getIdentificacion()));
+            consulta.setString(2, objH.getDtsPaciente().getNombre());
+            consulta.setString(3, objH.getDtsPaciente().getDireccion());
+            consulta.setString(4, String.valueOf(objH.getDtsPaciente().afiliacion()));   
+            consulta.setString(5, objH.getDtsPaciente().getTelefono());
+            consulta.execute();
+            
+            double valor = 0;
+            String comando2 = "insert into servicio values(?,?)";
+            consulta = conexion.getConexion().prepareStatement(comando2);
+            if(objH.getDtsServicio() instanceof Vacunacion)
+            {
+                consulta.setInt(1, Integer.parseInt(objH.getDtsServicio().getCodigo()));
+                consulta.setString(2, "Vacunacion");
+                valor = objH.valor();
+                
+            }
+            if(objH.getDtsServicio() instanceof Hospitalizacion)
+            {
+                consulta.setInt(1, Integer.parseInt(objH.getDtsServicio().getCodigo()));
+                consulta.setString(2, "Hospitalizacion");
+                valor =  objH.valorHOPS((Hospitalizacion) objH.getDtsServicio());
+            }
+            if(objH.getDtsServicio() instanceof Laboratorios)
+            {
+                consulta.setInt(1, Integer.parseInt(objH.getDtsServicio().getCodigo()));
+                consulta.setString(2, "Laboratorios");
+                valor = objH.valorLAB((Laboratorios) objH.getDtsServicio());
+            }
+            if(objH.getDtsServicio() instanceof CitaMedGenr)
+            {
+                consulta.setInt(1, Integer.parseInt(objH.getDtsServicio().getCodigo()));
+                consulta.setString(2, "Cita Medicina General");
+                valor = objH.valor();
+            }
+            consulta.execute();
+            
+            
+            String comando3 = "insert into historia_clinica (id_paciente,fecha,valor) values(?,?,?)";
+            consulta = conexion.getConexion().prepareStatement(comando3);
+            //id medico, del metodo, cuando este
+            consulta.setInt(1, Integer.parseInt(objH.getDtsPaciente().getIdentificacion()));
+            consulta.setString(2, objH.getFecha().toString());
+            consulta.setDouble(3, valor);
+            consulta.execute();
+            
+            msj = "Registro exitoso";
+            consulta.close();
+            conexion.getConexion().close();
+        }catch(SQLException e)
+        {
+            msj = "Error al ingreso de datos" + e.toString();
+        }
+        return msj;
+    }
+    
     public HistoriaClinica getObjH() {
         return objH;
     }
