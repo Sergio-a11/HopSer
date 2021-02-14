@@ -146,7 +146,7 @@ public class HospitalDAO {
             con.conectar();
             Statement consulta = con.getConexion().createStatement();//se crea la instancia para madar peticiones a la bd
             ResultSet datos = consulta.executeQuery("select max(`idmedico`) from `medico`");//devuelve el resultado a de la consulta a bd
-            boolean next = datos.next();
+            //datos.next();
             JOptionPane.showMessageDialog(null, datos.next());
             int r =  Integer.parseInt(datos.getString(1));
             Random ran = new Random();

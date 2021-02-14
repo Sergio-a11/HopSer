@@ -383,33 +383,34 @@ public class Controlador implements ActionListener, Runnable {
                     String insertar2 = conexionbd.insertar2();
                     if("Error al ingreso de datos, llave primaria (DNI) repetida".equals(insertar2))
                     {
-                        JOptionPane.showMessageDialog(frmPrincipal, "Historia Clinica NO Registrada\nError al ingreso de datos, llave primaria (DNI) repetida");
+                        JOptionPane.showMessageDialog(frmPrincipal, "Historia Clinica NO Registrada\nError al ingreso de datos, llave primaria (DNI) o COD_Servicio repetida");
                     }
                     else
                     {
                         JOptionPane.showMessageDialog(frmPrincipal, "Historia Clinica Registrada");
+                        frmRegistrar.getTxtNro().setText(String.valueOf(frmConsultar.getTblConsulta().getRowCount() + 1));
+                        frmRegistrar.getTxtAno().setText("");
+                        frmRegistrar.getTxtDia().setText("");
+                        frmRegistrar.getTxtMes().setText("");
+                        frmRegistrar.getTxtIdentificacion().setText("");
+                        frmRegistrar.getTxtTelefono().setText("");
+                        frmRegistrar.getTxtaDescripcion().setText("");
+                        frmRegistrar.getTxtCodigo().setText("");
+                        frmRegistrar.getTxtDireccion().setText("");
+                        frmRegistrar.getTxtNombre().setText("");
                     }
                     System.out.println(insertar);
                     System.out.println(insertar2);
                     con.EscribeDatos(msj, "RegistroHospital.txt");
                     //pdf.crear_PDF(historia);
-                    JOptionPane.showMessageDialog(frmPrincipal, "Se ha generado un recibo en pdf");
+                    //JOptionPane.showMessageDialog(frmPrincipal, "Se ha generado un recibo en pdf");
                 }catch(IOException ex){
                     JOptionPane.showMessageDialog(frmConsultar, "Error al abrir el archivo");
                 }   
 
             }
             //limpieza porque no hay jPanle
-            frmRegistrar.getTxtNro().setText("");
-            frmRegistrar.getTxtAno().setText("");
-            frmRegistrar.getTxtDia().setText("");
-            frmRegistrar.getTxtMes().setText("");
-            frmRegistrar.getTxtIdentificacion().setText("");
-            frmRegistrar.getTxtTelefono().setText("");
-            frmRegistrar.getTxtaDescripcion().setText("");
-            frmRegistrar.getTxtCodigo().setText("");
-            frmRegistrar.getTxtDireccion().setText("");
-            frmRegistrar.getTxtNombre().setText("");
+            
         }
         
         //objR.getListaH().get(objR.getListaH().size()-1).setDtsServicio(objS);

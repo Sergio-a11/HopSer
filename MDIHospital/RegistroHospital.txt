@@ -28,3 +28,9 @@
 8;13/2/2021;a veree;123456789;asdsad;12345678;S;Cita Medicina General;0.0
 8;13/2/2021;a ver que pedo;123456789;asdsa;123456798;S;Cita Medicina General;0.0
 8;13/2/2021;asdsad;123456454;asdsa;1234567;S;Vacunacion;0.0
+9;13/2/2021;adsadsa;123456855;asdsadadsdsa;123456789;S;Cita Medicina General;0.0
+9;13/2/2021;dasdsa;123456969;asdsadsa;1234567;S;Vacunacion;0.0
+10;13/2/2021;asdad;01234567;adssad;1234567;B;Vacunacion;10000.0
+11;13/2/2021;asdsad;012347852;dfgfdg;132456789;B;Vacunacion;10000.0
+12;13/2/2021;prueba;032165475;asdsda;123456789;B;Vacunacion;10000.0
+13;13/2/2021;asd;045716445;asdsad;4567122;C;Vacunacion;20000.0
