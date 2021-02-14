@@ -26,7 +26,6 @@ import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import sun.tools.jar.Main;
 /**
  * @web http://jc-mouse.blogspot.com/
  * @author Mouse

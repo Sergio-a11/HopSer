@@ -1,12 +1,11 @@
 vista\VentanaRegistrar$7.class
-control\Controlador.class
 modelo\Servicio.class
 modelo\TipoB.class
 modelo\ConexionBD.class
-modelo\Registros.class
 vista\VentanaRegistrar$2.class
 modelo\FormatoEntradaExcepcion.class
 modelo\HistoriaClinica.class
+vista\BucarPaciente.class
 modelo\Examen.class
 vista\VentanaRegistrar$5.class
 modelo\Paciente.class
@@ -14,10 +13,8 @@ modelo\Hora.class
 vista\VentanaExamenes.class
 modelo\Conexion.class
 vista\VentanaConsultar$1.class
-modelo\CitaMedGenr.class
 modelo\Hospitalizacion.class
 vista\VentanaPrincipal.class
-modelo\TipoA.class
 modelo\Vacunacion.class
 vista\VentanaRegistrar$8.class
 vista\VentanaRegistrar$1.class
@@ -31,6 +28,4 @@ vista\VentanaRegistrar.class
 vista\VentanaConsultar.class
 vista\VentanaRegistrar$4.class
 vista\VentanaRegistrar$9.class
-com\mycompany\MDIHospital\MDIhospital.class
 modelo\ArchPdf.class
-modelo\HistoriaClinicaDAO.class

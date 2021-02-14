@@ -5,6 +5,9 @@
  */
 package modelo;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  *
  * @author dadxc
@@ -61,9 +64,15 @@ public abstract class  Servicio {
      * @throws modelo.FormatoEntradaExcepcion excepción nulo
      */
     public void setCodigo(String Codigo) throws FormatoEntradaExcepcion {
+        Pattern pat = Pattern.compile("[1-9]");
+        Matcher mat = pat.matcher(Codigo);
         if(Codigo.equals(""))
         {
             throw new FormatoEntradaExcepcion(101);
+        }
+        else if(!mat.find())
+        {
+            throw new FormatoEntradaExcepcion(103);
         }
         else
         {

@@ -5,11 +5,13 @@
  */
 package modelo;
 
+import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -19,14 +21,14 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Sergio Cruz
  */
-public class HistoriaClinicaDAO {
+public class HospitalDAO {
     HistoriaClinica objH;
 
-    public HistoriaClinicaDAO(HistoriaClinica objH) {
+    public HospitalDAO(HistoriaClinica objH) {
         this.objH = objH;
     }
     
-    public HistoriaClinicaDAO() {
+    public HospitalDAO() {
         this.objH = new HistoriaClinica();
     }
     
@@ -136,6 +138,31 @@ public class HistoriaClinicaDAO {
         return msj;
     }
     
+    public int medico()
+    {
+        int idmed = 0;
+        ConexionBD con = new ConexionBD();//objeto con datos de la base de datos y capaz de conectarse a ella
+        try {
+            con.conectar();
+            Statement consulta = con.getConexion().createStatement();//se crea la instancia para madar peticiones a la bd
+            ResultSet datos = consulta.executeQuery("select max(`idmedico`) from `medico`");//devuelve el resultado a de la consulta a bd
+            boolean next = datos.next();
+            JOptionPane.showMessageDialog(null, datos.next());
+            int r =  Integer.parseInt(datos.getString(1));
+            Random ran = new Random();
+            idmed =  1 + ran.nextInt(r);
+            consulta.close();
+            con.getConexion().close();
+            datos.close();
+        }catch(SQLException e)
+        {
+            JOptionPane.showMessageDialog(null, e);
+        }
+        return idmed;
+        
+    }
+    
+    
     //metodo que devuelva un nuemro aleatorio de medico
     
     public String insertar2()
@@ -186,21 +213,26 @@ public class HistoriaClinicaDAO {
             consulta.execute();
             
             
-            String comando3 = "insert into historia_clinica (id_paciente,fecha,valor) values(?,?,?)";
+            String comando3 = "insert into historia_clinica (id_medico,id_paciente,fecha,valor) values(?,?,?,?)";
             consulta = conexion.getConexion().prepareStatement(comando3);
-            //id medico, del metodo, cuando este
-            consulta.setInt(1, Integer.parseInt(objH.getDtsPaciente().getIdentificacion()));
-            consulta.setString(2, objH.getFecha().toString());
-            consulta.setDouble(3, valor);
+            consulta.setInt(1, medico());
+            consulta.setInt(2, Integer.parseInt(objH.getDtsPaciente().getIdentificacion()));
+            consulta.setString(3, objH.getFecha().toString());
+            consulta.setDouble(4, valor);
             consulta.execute();
             
             msj = "Registro exitoso";
             consulta.close();
             conexion.getConexion().close();
-        }catch(SQLException e)
+        }catch(MySQLIntegrityConstraintViolationException e)
+        {
+            msj = "Error al ingreso de datos, llave primaria (DNI) repetida";
+        }
+        catch(SQLException e)
         {
             msj = "Error al ingreso de datos" + e.toString();
         }
+       
         return msj;
     }
     

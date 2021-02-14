@@ -23,3 +23,8 @@
 3412122;2/2/2021;labsprueba;3124325435546;adsdadsddddwww;4344343443;S;Laboratorios;0.0
 3;13/2/2021;Camilo Torres;100024578;Cra Cra 9;2301457888;A;Vacunacion;5000.0
 4;13/2/2021;Camilo Huena;123456789;cra cra cra;1239876514;B;Vacunacion;10000.0
+6;13/2/2021;okoko;123457888;nmsndasdsad;12345755;C;Vacunacion;20000.0
+7;13/2/2021;javiaer;123000045;no se we ya no se;1234567;S;Vacunacion;0.0
+8;13/2/2021;a veree;123456789;asdsad;12345678;S;Cita Medicina General;0.0
+8;13/2/2021;a ver que pedo;123456789;asdsa;123456798;S;Cita Medicina General;0.0
+8;13/2/2021;asdsad;123456454;asdsa;1234567;S;Vacunacion;0.0

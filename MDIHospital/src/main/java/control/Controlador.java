@@ -36,7 +36,7 @@ public class Controlador implements ActionListener, Runnable {
     Laboratorios auxL;
     Conexion con;
     long total;
-    HistoriaClinicaDAO conexionbd;
+    HospitalDAO conexionbd;
     Thread hilo1;
     Hora hora;
 
@@ -75,7 +75,7 @@ public class Controlador implements ActionListener, Runnable {
         auxH = new Hospitalizacion();
         auxL = new Laboratorios();
         this.total = 0;
-        this.conexionbd = new HistoriaClinicaDAO();
+        this.conexionbd = new HospitalDAO();
         this.hilo1 = new Thread(this);
         this.hora = new Hora();
     }
@@ -379,12 +379,20 @@ public class Controlador implements ActionListener, Runnable {
                     String msj = datos(objR.getListaH().size()-1);
                     conexionbd.setObjH(historia);
                     String insertar = conexionbd.insertar();
+                    
                     String insertar2 = conexionbd.insertar2();
+                    if("Error al ingreso de datos, llave primaria (DNI) repetida".equals(insertar2))
+                    {
+                        JOptionPane.showMessageDialog(frmPrincipal, "Historia Clinica NO Registrada\nError al ingreso de datos, llave primaria (DNI) repetida");
+                    }
+                    else
+                    {
+                        JOptionPane.showMessageDialog(frmPrincipal, "Historia Clinica Registrada");
+                    }
                     System.out.println(insertar);
                     System.out.println(insertar2);
                     con.EscribeDatos(msj, "RegistroHospital.txt");
-                    pdf.crear_PDF(historia);
-                    JOptionPane.showMessageDialog(frmPrincipal, "Historia Clinica Registrada");
+                    //pdf.crear_PDF(historia);
                     JOptionPane.showMessageDialog(frmPrincipal, "Se ha generado un recibo en pdf");
                 }catch(IOException ex){
                     JOptionPane.showMessageDialog(frmConsultar, "Error al abrir el archivo");
