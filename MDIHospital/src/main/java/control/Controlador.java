@@ -31,6 +31,7 @@ public class Controlador implements ActionListener, Runnable {
     VentanaRegistrar frmRegistrar;
     VentanaExamenes frmExamenes;
     VentanaConsultar frmConsultar;
+    Consultar frmConsultar1;
     ArrayList<Examen> examenes;
     Hospitalizacion auxH;
     Laboratorios auxL;
@@ -50,13 +51,16 @@ public class Controlador implements ActionListener, Runnable {
         this.frmRegistrar = new VentanaRegistrar();
         this.frmExamenes = new VentanaExamenes();
         this.frmConsultar = new VentanaConsultar();
+        this.frmConsultar1 = new Consultar();
         this.con = new Conexion();
         frmPrincipal.getPndEscritorio().add(frmRegistrar);
         frmPrincipal.getPndEscritorio().add(frmExamenes);
         frmPrincipal.getPndEscritorio().add(frmConsultar);
+        frmPrincipal.getPndEscritorio().add(frmConsultar1);
         this.frmPrincipal.getOpcmMedico().addActionListener(this);
         this.frmPrincipal.getOpcmRegistrar().addActionListener(this);
         this.frmPrincipal.getOpcmConsultar().addActionListener(this);
+        this.frmPrincipal.getOpcmConsultarHistoria().addActionListener(this);
         this.frmPrincipal.getOpcmSalir().addActionListener(this);
         this.frmRegistrar.getBtnFechaSistema().addActionListener(this);
         this.frmRegistrar.getBtnRegistrar().addActionListener(this);
@@ -111,6 +115,16 @@ public class Controlador implements ActionListener, Runnable {
             //}
             frmConsultar.getTxtTotal().setText(String.valueOf(this.total));
             abrirVentana(frmConsultar);
+        }
+        if(ae.getSource() == frmPrincipal.getOpcmConsultarHistoria())
+        {
+            abrirVentana(frmConsultar1);
+            frmConsultar1.getTblHistorias().setModel(conexionbd.consultarHistorias());
+            frmConsultar1.getTblPacientes().setModel(conexionbd.consultarPacientes());
+            frmConsultar1.getTblServicios().setModel(conexionbd.consultarServicios());
+            frmConsultar1.getTblHospitalizaciones().setModel(conexionbd.consultarHospitalizaciones());
+            frmConsultar1.getTblLabs().setModel(conexionbd.consultarExamenes());
+            frmConsultar1.getTxtTotal().setText(String.valueOf(conexionbd.getTotal()));
         }
         if(ae.getSource() == frmPrincipal.getOpcmSalir()){
             System.exit(0);
@@ -405,8 +419,8 @@ public class Controlador implements ActionListener, Runnable {
                     System.out.println(insertar);
                     System.out.println(insertar2);
                     con.EscribeDatos(msj, "RegistroHospital.txt");
-                    //pdf.crear_PDF(historia);
-                    //JOptionPane.showMessageDialog(frmPrincipal, "Se ha generado un recibo en pdf");
+                    pdf.crear_PDF(historia);
+                    JOptionPane.showMessageDialog(frmPrincipal, "Se ha generado un recibo en pdf");
                 }catch(IOException ex){
                     JOptionPane.showMessageDialog(frmConsultar, "Error al abrir el archivo");
                 }   

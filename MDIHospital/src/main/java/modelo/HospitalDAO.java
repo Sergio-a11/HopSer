@@ -23,6 +23,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class HospitalDAO {
     HistoriaClinica objH;
+    private double total;
 
     public HospitalDAO(HistoriaClinica objH) {
         this.objH = objH;
@@ -30,8 +31,188 @@ public class HospitalDAO {
     
     public HospitalDAO() {
         this.objH = new HistoriaClinica();
+        this.total = 0;
     }
     
+    public DefaultTableModel consultarHistorias()
+    {
+        DefaultTableModel plantilla = new DefaultTableModel();
+        ConexionBD con = new ConexionBD();//objeto con datos de la base de datos y capaz de conectarse a ella
+        try {
+            con.conectar();
+            Statement consulta = con.getConexion().createStatement();//se crea la instancia para madar peticiones a la bd
+            ResultSet datos = consulta.executeQuery("select * from historia_clinica");//devuelve el resultado a de la consulta a bd
+            ResultSetMetaData campos = datos.getMetaData();//devuelve, numeros, tipos y propiedaddes de los objetos en las columnas
+            
+            for (int i = 1; i <= campos.getColumnCount(); i++) 
+            {
+                plantilla.addColumn(campos.getColumnName(i));//se añaden las columnas a la tabla
+            }
+            
+            while(datos.next())
+            {
+                Object fila[] = new Object[campos.getColumnCount()];
+                for (int i = 0; i < campos.getColumnCount(); i++) //menor que el número de columnas
+                {
+                    fila[i] = datos.getObject(i+1);//se guardan los datos de las filas, desde la fila 1, la cero son los nombres de las columnas
+                
+                }
+                plantilla.addRow(fila);
+                total += Double.parseDouble(datos.getString(5));
+            }
+            datos.close();
+            con.getConexion().close();
+            
+            
+        }catch (SQLException e)
+        {
+           JOptionPane.showMessageDialog(null, e.toString()); 
+        }
+        return plantilla;        
+    }
+    
+    
+    
+    public DefaultTableModel consultarPacientes()
+    {
+        DefaultTableModel plantilla = new DefaultTableModel();
+        ConexionBD con = new ConexionBD();//objeto con datos de la base de datos y capaz de conectarse a ella
+        try {
+            con.conectar();
+            Statement consulta = con.getConexion().createStatement();//se crea la instancia para madar peticiones a la bd
+            ResultSet datos = consulta.executeQuery("select * from paciente");//devuelve el resultado a de la consulta a bd
+            ResultSetMetaData campos = datos.getMetaData();//devuelve, numeros, tipos y propiedaddes de los objetos en las columnas
+            
+            for (int i = 1; i <= campos.getColumnCount(); i++) 
+            {
+                plantilla.addColumn(campos.getColumnName(i));//se añaden las columnas a la tabla
+            }
+            
+            while(datos.next())
+            {
+                Object fila[] = new Object[campos.getColumnCount()];
+                for (int i = 0; i < campos.getColumnCount(); i++) //menor que el número de columnas
+                {
+                    fila[i] = datos.getObject(i+1);//se guardan los datos de las filas, desde la fila 1, la cero son los nombres de las columnas
+                
+                }
+                plantilla.addRow(fila);
+            }
+            datos.close();
+            con.getConexion().close();
+            
+        }catch (SQLException e)
+        {
+           JOptionPane.showMessageDialog(null, e.toString()); 
+        }
+        return plantilla;        
+    }
+    
+    
+    public DefaultTableModel consultarServicios()
+    {
+        DefaultTableModel plantilla = new DefaultTableModel();
+        ConexionBD con = new ConexionBD();//objeto con datos de la base de datos y capaz de conectarse a ella
+        try {
+            con.conectar();
+            Statement consulta = con.getConexion().createStatement();//se crea la instancia para madar peticiones a la bd
+            ResultSet datos = consulta.executeQuery("select * from servicio_paciente");//devuelve el resultado a de la consulta a bd
+            ResultSetMetaData campos = datos.getMetaData();//devuelve, numeros, tipos y propiedaddes de los objetos en las columnas
+            
+            for (int i = 1; i <= campos.getColumnCount(); i++) 
+            {
+                plantilla.addColumn(campos.getColumnName(i));//se añaden las columnas a la tabla
+            }
+            
+            while(datos.next())
+            {
+                Object fila[] = new Object[campos.getColumnCount()];
+                for (int i = 0; i < campos.getColumnCount(); i++) //menor que el número de columnas
+                {
+                    fila[i] = datos.getObject(i+1);//se guardan los datos de las filas, desde la fila 1, la cero son los nombres de las columnas
+                
+                }
+                plantilla.addRow(fila);
+            }
+            datos.close();
+            con.getConexion().close();
+            
+        }catch (SQLException e)
+        {
+           JOptionPane.showMessageDialog(null, e.toString()); 
+        }
+        return plantilla;        
+    }
+    
+    public DefaultTableModel consultarHospitalizaciones()
+    {
+        DefaultTableModel plantilla = new DefaultTableModel();
+        ConexionBD con = new ConexionBD();//objeto con datos de la base de datos y capaz de conectarse a ella
+        try {
+            con.conectar();
+            Statement consulta = con.getConexion().createStatement();//se crea la instancia para madar peticiones a la bd
+            ResultSet datos = consulta.executeQuery("select * from hospitalizaciones");//devuelve el resultado a de la consulta a bd
+            ResultSetMetaData campos = datos.getMetaData();//devuelve, numeros, tipos y propiedaddes de los objetos en las columnas
+            
+            for (int i = 1; i <= campos.getColumnCount(); i++) 
+            {
+                plantilla.addColumn(campos.getColumnName(i));//se añaden las columnas a la tabla
+            }
+            
+            while(datos.next())
+            {
+                Object fila[] = new Object[campos.getColumnCount()];
+                for (int i = 0; i < campos.getColumnCount(); i++) //menor que el número de columnas
+                {
+                    fila[i] = datos.getObject(i+1);//se guardan los datos de las filas, desde la fila 1, la cero son los nombres de las columnas
+                
+                }
+                plantilla.addRow(fila);
+            }
+            datos.close();
+            con.getConexion().close();
+            
+        }catch (SQLException e)
+        {
+           JOptionPane.showMessageDialog(null, e.toString()); 
+        }
+        return plantilla;        
+    }
+    
+    public DefaultTableModel consultarExamenes()
+    {
+        DefaultTableModel plantilla = new DefaultTableModel();
+        ConexionBD con = new ConexionBD();//objeto con datos de la base de datos y capaz de conectarse a ella
+        try {
+            con.conectar();
+            Statement consulta = con.getConexion().createStatement();//se crea la instancia para madar peticiones a la bd
+            ResultSet datos = consulta.executeQuery("select * from examenes");//devuelve el resultado a de la consulta a bd
+            ResultSetMetaData campos = datos.getMetaData();//devuelve, numeros, tipos y propiedaddes de los objetos en las columnas
+            
+            for (int i = 1; i <= campos.getColumnCount(); i++) 
+            {
+                plantilla.addColumn(campos.getColumnName(i));//se añaden las columnas a la tabla
+            }
+            
+            while(datos.next())
+            {
+                Object fila[] = new Object[campos.getColumnCount()];
+                for (int i = 0; i < campos.getColumnCount(); i++) //menor que el número de columnas
+                {
+                    fila[i] = datos.getObject(i+1);//se guardan los datos de las filas, desde la fila 1, la cero son los nombres de las columnas
+                
+                }
+                plantilla.addRow(fila);
+            }
+            datos.close();
+            con.getConexion().close();
+            
+        }catch (SQLException e)
+        {
+           JOptionPane.showMessageDialog(null, e.toString()); 
+        }
+        return plantilla;        
+    }
     public DefaultTableModel consultar() //tabla de entrada o salida
     {
         DefaultTableModel plantilla = new DefaultTableModel();
@@ -280,6 +461,18 @@ public class HospitalDAO {
     public void setObjH(HistoriaClinica objH) {
         this.objH = objH;
     }
+
+    public double getTotal() {
+        return total;
+    }
+
+    public void setTotal(double total) {
+        this.total = total;
+    }
+
+    
+    
+    
 
     @Override
     public String toString() {
