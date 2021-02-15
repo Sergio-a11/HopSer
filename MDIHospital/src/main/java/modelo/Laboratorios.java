@@ -21,7 +21,7 @@ public class Laboratorios extends Servicio{
      * @param Nombre nombre de servicio, derivado del padre (Servivio)
      * @param Descripcion descripción de servicio, derivado del padre (Servivio)
      */
-    public Laboratorios(ArrayList<Examen> examenes, String Codigo, String Nombre, String Descripcion) {
+    public Laboratorios(ArrayList<Examen> examenes, int Codigo, String Nombre, String Descripcion) {
         super(Codigo, Nombre, Descripcion);
         this.examenes = examenes;
     }
@@ -58,7 +58,7 @@ public class Laboratorios extends Servicio{
     public String tiposervicio() {
         return "Laboratorios";
     }
-
+//316
     /**
      * Método para obtener la lista de examenes del paciente, en formato string de texto
      * @return String

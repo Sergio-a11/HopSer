@@ -182,44 +182,81 @@ public class HospitalDAO {
             consulta.setString(5, objH.getDtsPaciente().getTelefono());
             consulta.execute();
             
-            double valor = 0;
-            String comando2 = "insert into servicio values(?,?)";
+            double valor = 0; 
+            String comando2 = "insert into servicio_paciente (id_servicio, id_paciente, nombre_servicio) values(?,?,?)";
             consulta = conexion.getConexion().prepareStatement(comando2);
             if(objH.getDtsServicio() instanceof Vacunacion)
             {
-                consulta.setInt(1, Integer.parseInt(objH.getDtsServicio().getCodigo()));
-                consulta.setString(2, "Vacunacion");
+                consulta.setInt(1, objH.getDtsServicio().getCodigo());
+                consulta.setInt(2, Integer.parseInt(objH.getDtsPaciente().getIdentificacion()));
+                consulta.setString(3, "Vacunacion");
                 valor = objH.valor();
                 
             }
             if(objH.getDtsServicio() instanceof Hospitalizacion)
             {
-                consulta.setInt(1, Integer.parseInt(objH.getDtsServicio().getCodigo()));
-                consulta.setString(2, "Hospitalizacion");
+                consulta.setInt(1, objH.getDtsServicio().getCodigo());
+                consulta.setInt(2, Integer.parseInt(objH.getDtsPaciente().getIdentificacion()));
+                consulta.setString(3, "Hospitalizacion");
                 valor =  objH.valorHOPS((Hospitalizacion) objH.getDtsServicio());
             }
             if(objH.getDtsServicio() instanceof Laboratorios)
             {
-                consulta.setInt(1, Integer.parseInt(objH.getDtsServicio().getCodigo()));
-                consulta.setString(2, "Laboratorios");
+                consulta.setInt(1, objH.getDtsServicio().getCodigo());
+                consulta.setInt(2, Integer.parseInt(objH.getDtsPaciente().getIdentificacion()));
+                consulta.setString(3, "Laboratorios");
                 valor = objH.valorLAB((Laboratorios) objH.getDtsServicio());
             }
             if(objH.getDtsServicio() instanceof CitaMedGenr)
             {
-                consulta.setInt(1, Integer.parseInt(objH.getDtsServicio().getCodigo()));
-                consulta.setString(2, "Cita Medicina General");
+                consulta.setInt(1, objH.getDtsServicio().getCodigo());
+                consulta.setInt(2, Integer.parseInt(objH.getDtsPaciente().getIdentificacion()));
+                consulta.setString(3, "Cita Medicina General");
+                
+                
                 valor = objH.valor();
             }
             consulta.execute();
             
             
-            String comando3 = "insert into historia_clinica (id_medico,id_paciente,fecha,valor) values(?,?,?,?)";
+            String comando3 = "insert into historia_clinica (id_medico,id_paciente,fecha,valor,descripcion) values(?,?,?,?,?)";
             consulta = conexion.getConexion().prepareStatement(comando3);
             consulta.setInt(1, medico());
             consulta.setInt(2, Integer.parseInt(objH.getDtsPaciente().getIdentificacion()));
             consulta.setString(3, objH.getFecha().toString());
             consulta.setDouble(4, valor);
+            consulta.setString(5, objH.getDtsServicio().getDescripcion());
             consulta.execute();
+            
+            if(objH.getDtsServicio() instanceof Hospitalizacion)
+            {
+                String comando4 = "insert into hospitalizaciones (id_servicio, fecha_salida) values(?,?)";
+                consulta = conexion.getConexion().prepareStatement(comando4);
+                consulta.setInt(1, objH.getDtsServicio().getCodigo());
+                Hospitalizacion auxH = (Hospitalizacion) objH.getDtsServicio();
+                consulta.setString(2, auxH.getSalida().toString());
+                consulta.execute();
+            }
+            
+            if(objH.getDtsServicio() instanceof Laboratorios)
+            {
+                
+                Laboratorios auxL = (Laboratorios) objH.getDtsServicio();
+                //codigo examen y nombre, el del servicio se repite
+                JOptionPane.showMessageDialog(null, String.valueOf(auxL.getExamenes().size()));
+                String comando5 = "insert into examenes values (?,?,?,?,?)";
+                consulta = conexion.getConexion().prepareStatement(comando5);
+                for(int i=0; i<(auxL.getExamenes().size()); i++)
+                {
+                    
+                    consulta.setInt(1,objH.getDtsServicio().getCodigo());
+                    consulta.setString(2, auxL.getExamenes().get(i).getCod());
+                    consulta.setString(3, auxL.getExamenes().get(i).getNombre());
+                    consulta.setString(4, auxL.getExamenes().get(i).getDescripcion());
+                    consulta.setDouble(5, auxL.getExamenes().get(i).getValor());
+                    consulta.execute();
+                }                
+            }
             
             msj = "Registro exitoso";
             consulta.close();

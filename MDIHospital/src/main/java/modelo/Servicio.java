@@ -7,6 +7,7 @@ package modelo;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -17,12 +18,12 @@ public abstract class  Servicio {
     /**
      *codigo respectivo de cada servicio
      */
-    protected String Codigo,
+    protected int Codigo;
 
     /**
      *nombre respectivo al servicio
      */
-    Nombre,
+    protected String Nombre,
 
     /**
      *descripcion respectiva de cada servicio
@@ -35,7 +36,7 @@ public abstract class  Servicio {
      * @param Nombre nombre del servicio
      * @param Descripcion descripcion del servicio
      */
-    public Servicio(String Codigo, String Nombre, String Descripcion) {
+    public Servicio(int Codigo, String Nombre, String Descripcion) {
         this.Codigo = Codigo;
         this.Nombre = Nombre;
         this.Descripcion = Descripcion;
@@ -45,7 +46,7 @@ public abstract class  Servicio {
      *Constructor basico
      */
     public Servicio() {
-        this.Codigo = "";
+        this.Codigo = 0;
         this.Nombre = "";
         this.Descripcion = "";
     }
@@ -54,30 +55,25 @@ public abstract class  Servicio {
      *retorna el codigo del servicio
      * @return String
      */
-    public String getCodigo() {
+    public int getCodigo() {
         return Codigo;
     }
 
     /**
      *establece o modifica el codigo del servicio
      * @param Codigo codigo del servicio
-     * @throws modelo.FormatoEntradaExcepcion excepción nulo
      */
-    public void setCodigo(String Codigo) throws FormatoEntradaExcepcion {
-        Pattern pat = Pattern.compile("[1-9]");
-        Matcher mat = pat.matcher(Codigo);
-        if(Codigo.equals(""))
+    public void setCodigo(int Codigo)
+    {
+        try
         {
-            throw new FormatoEntradaExcepcion(101);
-        }
-        else if(!mat.find())
+            this.Codigo = Codigo;
+        }catch(NumberFormatException e)
         {
-            throw new FormatoEntradaExcepcion(103);
+            JOptionPane.showMessageDialog(null, e.toString());
         }
-        else
-        {
-           this.Codigo = Codigo;
-        }
+           
+        
     }
 
     /**
@@ -110,7 +106,7 @@ public abstract class  Servicio {
      * @throws modelo.FormatoEntradaExcepcion excepción nulo
      */
     public void setDescripcion(String Descripcion) throws FormatoEntradaExcepcion {
-        if(Codigo.equals(""))
+        if(Descripcion.equals(""))
         {
             throw new FormatoEntradaExcepcion(101);
         }

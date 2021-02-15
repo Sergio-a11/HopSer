@@ -24,7 +24,7 @@ public class Hospitalizacion extends Servicio{
      * @param Nombre nombre de servicio, derivado del padre (Servivio)
      * @param Descripcion descripción de servicio, derivado del padre (Servivio)
      */
-    public Hospitalizacion(Fecha Ingreso, Fecha Salida, String Codigo, String Nombre, String Descripcion) {
+    public Hospitalizacion(Fecha Ingreso, Fecha Salida, int Codigo, String Nombre, String Descripcion) {
         super(Codigo, Nombre, Descripcion);
         this.Ingreso = Ingreso;
         this.Salida = Salida;

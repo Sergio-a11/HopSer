@@ -17,7 +17,7 @@ public class Vacunacion extends Servicio{
      * @param Nombre Nombre de la vacunacion
      * @param Descripcion Descripcion de la vacunacion
      */
-    public Vacunacion(String Codigo, String Nombre, String Descripcion) {
+    public Vacunacion(int Codigo, String Nombre, String Descripcion) {
         super(Codigo, Nombre, Descripcion);
     }
 

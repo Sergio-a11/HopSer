@@ -278,8 +278,8 @@ public class Controlador implements ActionListener, Runnable {
                //objS = new CitaMedGenr(frmRegistrar.getTxtCodigo().getText(), "Cita Medicina General", frmRegistrar.getTxtaDescripcion().getText()); 
                 CitaMedGenr med = new CitaMedGenr();
                 try {
-                    med.setCodigo(frmRegistrar.getTxtCodigo().getText());
-                } catch (FormatoEntradaExcepcion ex) {
+                    med.setCodigo(Integer.parseInt(frmRegistrar.getTxtCodigo().getText()));
+                } catch (NumberFormatException ex) {
                     JOptionPane.showMessageDialog(frmPrincipal, ex.toString() + " (Cod Servicio)"); 
                     flag = true;
                 }
@@ -297,8 +297,8 @@ public class Controlador implements ActionListener, Runnable {
                //objS = new Vacunacion(frmRegistrar.getTxtCodigo().getText(), "Vacunacion", frmRegistrar.getTxtaDescripcion().getText()); 
                 Vacunacion vac = new Vacunacion();
                 try {
-                    vac.setCodigo(frmRegistrar.getTxtCodigo().getText());
-                } catch (FormatoEntradaExcepcion ex) {
+                    vac.setCodigo(Integer.parseInt(frmRegistrar.getTxtCodigo().getText()));
+                } catch (NumberFormatException ex) {
                     JOptionPane.showMessageDialog(frmPrincipal, ex.toString() + " (Cod Servicio)"); 
                     flag = true;
                 }
@@ -313,17 +313,20 @@ public class Controlador implements ActionListener, Runnable {
                break;
             }
             case 2:{
-                    abrirVentana(frmExamenes);
-                Laboratorios lab = new Laboratorios(examenes, null, null, null);
+                    abrirVentana(frmExamenes);//apertura
+                Laboratorios lab = new Laboratorios(null, (frmConsultar.getTblConsulta().getRowCount() + 1) , null, null);
                 try {
-                    lab.setCodigo(frmRegistrar.getTxtCodigo().getText());
-                } catch (FormatoEntradaExcepcion ex) {
+                    lab.setCodigo(Integer.parseInt(frmRegistrar.getTxtCodigo().getText()));
+                    auxL.setCodigo(Integer.parseInt(frmRegistrar.getTxtCodigo().getText()));
+                } catch (NumberFormatException ex) {
                     JOptionPane.showMessageDialog(frmPrincipal, ex.toString() + " (Cod Servicio)"); 
                     flag = true;
                 }
                 lab.setNombre("Laboratorio");
+                auxL.setNombre("Laboratorio");
                 try {
                     lab.setDescripcion(frmRegistrar.getTxtaDescripcion().getText());
+                    auxL.setDescripcion(frmRegistrar.getTxtaDescripcion().getText());
                 } catch (FormatoEntradaExcepcion ex) {
                     JOptionPane.showMessageDialog(frmPrincipal, ex.toString() + " (Nom Servicio)"); 
                     flag = true;
@@ -341,7 +344,7 @@ public class Controlador implements ActionListener, Runnable {
                                          Integer.parseInt(JOptionPane.showInputDialog(frmRegistrar,"Mes de salida:","Ingrese fecha de salida [formato mm]",1)),
                                          Integer.parseInt(JOptionPane.showInputDialog(frmRegistrar,"Año de salida:","Ingrese fecha de salida [formato aaaa]",1)));
                 hos.setSalida(salida);
-                hos.setCodigo(frmRegistrar.getTxtCodigo().getText());
+                hos.setCodigo(Integer.parseInt(frmRegistrar.getTxtCodigo().getText()));
                 hos.setNombre("Hospitalizacion");
                 hos.setDescripcion(frmRegistrar.getTxtaDescripcion().getText());
                 
@@ -395,7 +398,7 @@ public class Controlador implements ActionListener, Runnable {
                         frmRegistrar.getTxtIdentificacion().setText("");
                         frmRegistrar.getTxtTelefono().setText("");
                         frmRegistrar.getTxtaDescripcion().setText("");
-                        frmRegistrar.getTxtCodigo().setText("");
+                        frmRegistrar.getTxtCodigo().setText(String.valueOf(frmConsultar.getTblConsulta().getRowCount() + 1));
                         frmRegistrar.getTxtDireccion().setText("");
                         frmRegistrar.getTxtNombre().setText("");
                     }
@@ -439,11 +442,14 @@ public class Controlador implements ActionListener, Runnable {
                    if(frmExamenes.getBtnOdontologia().isSelected()){
                       ex=new Examen("105","Odontología",frmExamenes.getTxtDescripcion().getText(),50000);
                    }
-                examenes.add(ex);
-                auxL.setExamenes(examenes);
+                //examenes.add(ex);
+                
+                //auxL.setExamenes(examenes);
+                auxL.getExamenes().add(ex);
                 objR.getListaH().get(objR.getListaH().size()-1).setDtsServicio(auxL);
                 JOptionPane.showMessageDialog(frmExamenes, objR.getListaH().get(objR.getListaH().size()-1).getDtsServicio().toString());
                 JOptionPane.showMessageDialog(frmExamenes, "Examen Agregado con exito");
+                frmExamenes.getTxtDescripcion().setText("");
                 /*try{
                     String msj = datos(objR.getListaH().size()-1);
                     con.EscribeDatos(msj, "RegistroHospital.txt");
@@ -454,9 +460,9 @@ public class Controlador implements ActionListener, Runnable {
      if(ae.getSource() ==frmExamenes.getBtnFinalizar()){
          ArchPdf pdf = new ArchPdf();
          try{
-            String msj = datos(objR.getListaH().size()-1);
+            String msj = datos(objR.getListaH().size()-1);//txt
             conexionbd.setObjH(objR.getListaH().get(objR.getListaH().size()-1));
-            String insertar = conexionbd.insertar();
+            String insertar = conexionbd.insertar2();
             System.out.println(insertar);
             con.EscribeDatos(msj, "RegistroHospital.txt");
             pdf.crear_PDF((objR.getListaH().get(objR.getListaH().size()-1)));

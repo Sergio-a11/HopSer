@@ -17,7 +17,7 @@ public class CitaMedGenr extends Servicio{
      * @param Nombre nombre de servicio, derivado del padre (Servivio)
      * @param Descripcion descripción de servicio, derivado del padre (Servivio)
      */
-    public CitaMedGenr(String Codigo, String Nombre, String Descripcion) {
+    public CitaMedGenr(int Codigo, String Nombre, String Descripcion) {
         super(Codigo, Nombre, Descripcion);
     }
 

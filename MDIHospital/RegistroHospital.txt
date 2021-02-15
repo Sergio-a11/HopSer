@@ -34,3 +34,9 @@
 11;13/2/2021;asdsad;012347852;dfgfdg;132456789;B;Vacunacion;10000.0
 12;13/2/2021;prueba;032165475;asdsda;123456789;B;Vacunacion;10000.0
 13;13/2/2021;asd;045716445;asdsad;4567122;C;Vacunacion;20000.0
+1;14/2/2021;Sergio Cruz;1000616574;Cra 9. Este;7458921;B;Hospitalizacion;1240000.0
+2;14/2/2021;Sergio;1033845714;prueba;1234567;S;Laboratorios;0.0
+2;14/2/2021;Dan;104578457;cra;1234567;S;Laboratorios;0.0
+3;14/2/2021;Camilo;100000002;dir;1324567;B;Laboratorios;36000.0
+5;14/2/2021;caminooo;100000003;cadad;1234567;A;Laboratorios;4500.0
+6;14/2/2021;caminooosas;100000004;cadades;1234568;B;Vacunacion;10000.0
