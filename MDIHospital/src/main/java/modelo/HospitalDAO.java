@@ -538,27 +538,23 @@ public class HospitalDAO {
         return msj;
     }
     
-    public String actualizar2(String dni)
+    public String actualizar2(String[]  data)
     {
         String msj;
         try
         {
             ConexionBD conexion = new ConexionBD();
-            Statement consulta = conexion.getConexion().createStatement();
-            ResultSet datos2 = consulta.executeQuery("select * from paciente where id_paciente='" + dni + "'");//devuelve el resultado a de la consulta a bd
-            datos2.next();
-            msj = ("ID_Paciente: " + datos2.getString(1) + "\nNombre: " + datos2.getString(2) + "\nDirección: " + datos2.getString(3) + "\nTipo: " + datos2.getString(4) + "Telefono: " + datos2.getString(5));
-            PreparedStatement consulta2 = null;
+            PreparedStatement consulta = null;
             conexion.conectar();
             //JOptionPane.showMessageDialog(null, objH.toString());
-            String instruccion = "update `paciente` set `id_paciente`=?,`nombre`=?,`direccion`=?,`tipo_afiliacion`=?,`telefono`=? where `id_paciente`='" + dni +"'";
+            String instruccion = "update `paciente` set `id_paciente`=?,`nombre`=?,`direccion`=?,`tipo_afiliacion`=?,`telefono`=? where `id_paciente`='" + data[0] +"'";
             consulta = conexion.getConexion().prepareStatement(instruccion);
-            consulta2.setString(1, objH.getDtsPaciente().getIdentificacion());
-            consulta2.setString(2, objH.getDtsPaciente().getNombre());
-            consulta2.setString(3, objH.getDtsPaciente().getDireccion());
-            consulta2.setString(4, String.valueOf(objH.getDtsPaciente().afiliacion()));
-            consulta2.setString(5, objH.getDtsPaciente().getTelefono());
-            consulta2.execute();
+            consulta.setString(1, data[0]);
+            consulta.setString(2, data[1]);
+            consulta.setString(3, data[2]);
+            consulta.setString(4, data[3]);
+            consulta.setString(5, data[4]);
+            consulta.execute();
             msj = "Actualizacion realizada";
             consulta.close();
             conexion.getConexion().close();

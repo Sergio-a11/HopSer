@@ -550,8 +550,30 @@ public class Controlador implements ActionListener, Runnable {
                     frmActu.getCmbTipo().setSelectedIndex(3);
                     break;
             }
-            frmActu.setVisible(true);
-            
+            frmActu.setVisible(true);      
+    }
+    if(ae.getSource() == frmActu.getBtnActualizar())
+    {
+        String data[] = {"?","?","?","?","?"};
+        data[0] = frmActu.getTxtID().getText();
+        data[1] = frmActu.getTxtNombre().getText();
+        data[2] = frmActu.getTxtDireccion().getText();
+            switch (frmActu.getCmbTipo().getSelectedIndex()) {
+                case 0:
+                    data [3] = "A";
+                    break;
+                case 1:
+                    data [3] = "B";
+                    break;
+                case 2:
+                    data [3] = "C";
+                    break;
+                default:
+                    data [3] = "S";
+                    break;
+            }
+        data[4] = frmActu.getTxtTelefono().getText();
+        JOptionPane.showMessageDialog(frmPrincipal, conexionbd.actualizar2(data));
     }
      
     }
