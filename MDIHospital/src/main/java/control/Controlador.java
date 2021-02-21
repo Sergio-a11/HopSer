@@ -31,6 +31,8 @@ public class Controlador implements ActionListener, Runnable {
     VentanaRegistrar frmRegistrar;
     VentanaExamenes frmExamenes;
     VentanaConsultar frmConsultar;
+    BuscarPaciente frmBuscar;
+    Actualizar frmActu;
     Consultar frmConsultar1;
     ArrayList<Examen> examenes;
     Hospitalizacion auxH;
@@ -52,11 +54,15 @@ public class Controlador implements ActionListener, Runnable {
         this.frmExamenes = new VentanaExamenes();
         this.frmConsultar = new VentanaConsultar();
         this.frmConsultar1 = new Consultar();
+        this.frmBuscar = new BuscarPaciente();
+        this.frmActu = new Actualizar();
         this.con = new Conexion();
         frmPrincipal.getPndEscritorio().add(frmRegistrar);
         frmPrincipal.getPndEscritorio().add(frmExamenes);
         frmPrincipal.getPndEscritorio().add(frmConsultar);
         frmPrincipal.getPndEscritorio().add(frmConsultar1);
+        frmPrincipal.getPndEscritorio().add(frmActu);
+        frmPrincipal.getPndEscritorio().add(frmBuscar);
         this.frmPrincipal.getOpcmMedico().addActionListener(this);
         this.frmPrincipal.getOpcmRegistrar().addActionListener(this);
         this.frmPrincipal.getOpcmConsultar().addActionListener(this);
@@ -75,8 +81,11 @@ public class Controlador implements ActionListener, Runnable {
         this.frmPrincipal.getBtnConsultar().addActionListener(this);
         this.frmPrincipal.getBtnConsultarHistoria().addActionListener(this);
         this.frmPrincipal.getBtnRegistrar().addActionListener(this);
-        //this.frmConsultar1.getBtnActualizar().addActionListener(this);
         this.frmConsultar1.getBtnEliminar().addActionListener(this);
+        this.frmConsultar1.getBtnEliminarID().addActionListener(this);
+        this.frmConsultar1.getBtnActualizarID().addActionListener(this);
+        this.frmActu.getBtnActualizar().addActionListener(this);
+        this.frmBuscar.getBtnBuscar().addActionListener(this);
         examenes = new ArrayList<Examen>();
         auxH = new Hospitalizacion();
         auxL = new Laboratorios();
@@ -511,12 +520,39 @@ public class Controlador implements ActionListener, Runnable {
               JOptionPane.showMessageDialog(frmPrincipal, "Registro NO eliminado");
           }
     }
-     /*if(ae.getSource() == frmConsultar1.getBtnActualizar())
+    if(ae.getSource() == frmConsultar1.getBtnEliminarID())
     {
-            enviarDatosDAO();
-            JOptionPane.showMessageDialog(frmPrincipal, this.conexionbd.actualizar());
-
-    }*/
+            String elim = JOptionPane.showInputDialog(frmPrincipal, "ID Paciente: ");
+            String data = conexionbd.eliminar(elim);
+            JOptionPane.showMessageDialog(frmPrincipal, data);
+    }
+    if(ae.getSource() == frmConsultar1.getBtnActualizarID())
+    {
+            String bus = JOptionPane.showInputDialog(frmPrincipal, "ID Paciente: ");
+            String data = conexionbd.buscar(bus);
+            JOptionPane.showMessageDialog(frmPrincipal, data);
+            String aux[] = data.split(";");
+            frmActu.getTxtID().setText(aux[0]);
+            frmActu.getTxtNombre().setText(aux[1]);
+            frmActu.getTxtTelefono().setText(aux[4]);
+            frmActu.getTxtDireccion().setText(aux[2]);
+            switch (aux[3]) {
+                case "A":
+                    frmActu.getCmbTipo().setSelectedIndex(0);
+                    break;
+                case "B":
+                    frmActu.getCmbTipo().setSelectedIndex(1);
+                    break;
+                case "C":
+                    frmActu.getCmbTipo().setSelectedIndex(2);
+                    break;
+                default:
+                    frmActu.getCmbTipo().setSelectedIndex(3);
+                    break;
+            }
+            frmActu.setVisible(true);
+            
+    }
      
     }
     

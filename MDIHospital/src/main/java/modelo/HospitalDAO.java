@@ -505,7 +505,7 @@ public class HospitalDAO {
             String comando = "delete from `paciente` where `id_paciente`='" + dni + "'";
             consulta = conexion.getConexion().prepareStatement(comando);
             consulta.execute();
-            msj = "Registro eliminado";
+            msj = dni + ", Registro eliminado";
             consulta.close();
             conexion.getConexion().close();
         }catch(SQLException e)
@@ -516,23 +516,49 @@ public class HospitalDAO {
         return msj;
     }
     
-    public String actualizar()
+    public String buscar(String dni)
     {
         String msj;
         try
         {
             ConexionBD conexion = new ConexionBD();
-            PreparedStatement consulta = null;
+            conexion.conectar();
+            Statement consulta = conexion.getConexion().createStatement();
+            ResultSet datos2 = consulta.executeQuery("select * from paciente where id_paciente='" + dni + "'");//devuelve el resultado a de la consulta a bd
+            datos2.next();
+            msj = (datos2.getString(1) + ";" + datos2.getString(2) + ";" + datos2.getString(3) + ";" + datos2.getString(4) + ";" + datos2.getString(5));
+            //msj = "Actualizacion realizada";
+            consulta.close();
+            conexion.getConexion().close();
+            datos2.close();
+        }catch(SQLException e)
+        {
+            msj = "Error al actualizar el registro " + e;
+        }
+        return msj;
+    }
+    
+    public String actualizar2(String dni)
+    {
+        String msj;
+        try
+        {
+            ConexionBD conexion = new ConexionBD();
+            Statement consulta = conexion.getConexion().createStatement();
+            ResultSet datos2 = consulta.executeQuery("select * from paciente where id_paciente='" + dni + "'");//devuelve el resultado a de la consulta a bd
+            datos2.next();
+            msj = ("ID_Paciente: " + datos2.getString(1) + "\nNombre: " + datos2.getString(2) + "\nDirección: " + datos2.getString(3) + "\nTipo: " + datos2.getString(4) + "Telefono: " + datos2.getString(5));
+            PreparedStatement consulta2 = null;
             conexion.conectar();
             //JOptionPane.showMessageDialog(null, objH.toString());
-            String instruccion = "update `paciente` set `id_paciente`=?,`nombre`=?,`direccion`=?,`tipo_afiliacion`=?,`telefono`=? where `id_paciente`='" + objH.getDtsPaciente().getIdentificacion()+"'";
+            String instruccion = "update `paciente` set `id_paciente`=?,`nombre`=?,`direccion`=?,`tipo_afiliacion`=?,`telefono`=? where `id_paciente`='" + dni +"'";
             consulta = conexion.getConexion().prepareStatement(instruccion);
-            consulta.setString(1, objH.getDtsPaciente().getIdentificacion());
-            consulta.setString(2, objH.getDtsPaciente().getNombre());
-            consulta.setString(3, objH.getDtsPaciente().getDireccion());
-            consulta.setString(4, String.valueOf(objH.getDtsPaciente().afiliacion()));
-            consulta.setString(5, objH.getDtsPaciente().getTelefono());
-            consulta.execute();
+            consulta2.setString(1, objH.getDtsPaciente().getIdentificacion());
+            consulta2.setString(2, objH.getDtsPaciente().getNombre());
+            consulta2.setString(3, objH.getDtsPaciente().getDireccion());
+            consulta2.setString(4, String.valueOf(objH.getDtsPaciente().afiliacion()));
+            consulta2.setString(5, objH.getDtsPaciente().getTelefono());
+            consulta2.execute();
             msj = "Actualizacion realizada";
             consulta.close();
             conexion.getConexion().close();
@@ -542,7 +568,6 @@ public class HospitalDAO {
         }
         return msj;
     }
-    
 
     @Override
     public String toString() {

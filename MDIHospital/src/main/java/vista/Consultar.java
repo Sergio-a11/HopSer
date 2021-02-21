@@ -587,6 +587,30 @@ public class Consultar extends javax.swing.JInternalFrame {
         this.btnEliminar = btnEliminar;
     }
 
+    public JButton getBtnActualizarID() {
+        return btnActualizarID;
+    }
+
+    public void setBtnActualizarID(JButton btnActualizarID) {
+        this.btnActualizarID = btnActualizarID;
+    }
+
+    public JButton getBtnEliminarID() {
+        return btnEliminarID;
+    }
+
+    public void setBtnEliminarID(JButton btnEliminarID) {
+        this.btnEliminarID = btnEliminarID;
+    }
+
+    public JLabel getjLabel1() {
+        return jLabel1;
+    }
+
+    public void setjLabel1(JLabel jLabel1) {
+        this.jLabel1 = jLabel1;
+    }
+
     
     
     
