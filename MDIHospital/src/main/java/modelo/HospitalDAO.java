@@ -213,7 +213,7 @@ public class HospitalDAO {
         }
         return plantilla;        
     }
-    public DefaultTableModel consultar() //tabla de entrada o salida
+    /*public DefaultTableModel consultar() //tabla de entrada o salida
     {
         DefaultTableModel plantilla = new DefaultTableModel();
         ConexionBD con = new ConexionBD();//objeto con datos de la base de datos y capaz de conectarse a ella
@@ -248,7 +248,7 @@ public class HospitalDAO {
         return plantilla;        
     }
     
-    public String insertar()
+    /*public String insertar()
     {
         String msj="";
         try
@@ -295,26 +295,29 @@ public class HospitalDAO {
             msj = "Error al ingreso de datos" + e.toString();
         }
         return msj;
-    }
+    }*/
 
     public String insertarMedico(String nombre)
     {
-        String msj = "";
-        
-        try {
-            ConexionBD conexion = new ConexionBD();
-            PreparedStatement consulta = null;
-            conexion.conectar();
-            String comando = "insert into medico (nombre) values(?)";
-            consulta = conexion.getConexion().prepareStatement(comando);
-            consulta.setString(1, nombre);
-            consulta.execute();
-            msj = "Registro exitoso";
-            consulta.close();
-            conexion.getConexion().close();
-        } catch (SQLException ex) {
-            msj = "Error al ingreso de datos" + ex.toString();
+         String msj = "Inserte el nombre del médico";
+        if(nombre != null)
+        {
+            try {
+                ConexionBD conexion = new ConexionBD();
+                PreparedStatement consulta = null;
+                conexion.conectar();
+                String comando = "insert into medico (nombre) values(?)";
+                consulta = conexion.getConexion().prepareStatement(comando);
+                consulta.setString(1, nombre);
+                consulta.execute();
+                msj = "Registro exitoso";
+                consulta.close();
+                conexion.getConexion().close();
+            } catch (SQLException ex) {
+                msj = "Error al ingreso de datos" + ex.toString();
+            }
         }
+        
         
         return msj;
     }
@@ -533,7 +536,7 @@ public class HospitalDAO {
             datos2.close();
         }catch(SQLException e)
         {
-            msj = "Error al actualizar el registro " + e;
+            msj = "No se encuentra el registro";
         }
         return msj;
     }

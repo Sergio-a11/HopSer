@@ -39,6 +39,8 @@ public class BuscarPaciente extends javax.swing.JInternalFrame {
         jTextArea1 = new javax.swing.JTextArea();
         btnBuscar = new javax.swing.JButton();
 
+        setClosable(true);
+
         jLabel1.setText("ID Paciente:");
 
         jTextArea1.setColumns(20);

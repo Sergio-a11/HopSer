@@ -30,7 +30,6 @@ public class Controlador implements ActionListener, Runnable {
     VentanaPrincipal frmPrincipal;
     VentanaRegistrar frmRegistrar;
     VentanaExamenes frmExamenes;
-    VentanaConsultar frmConsultar;
     BuscarPaciente frmBuscar;
     Actualizar frmActu;
     Consultar frmConsultar1;
@@ -52,20 +51,19 @@ public class Controlador implements ActionListener, Runnable {
         this.frmPrincipal = new VentanaPrincipal();
         this.frmRegistrar = new VentanaRegistrar();
         this.frmExamenes = new VentanaExamenes();
-        this.frmConsultar = new VentanaConsultar();
         this.frmConsultar1 = new Consultar();
         this.frmBuscar = new BuscarPaciente();
         this.frmActu = new Actualizar();
         this.con = new Conexion();
         frmPrincipal.getPndEscritorio().add(frmRegistrar);
         frmPrincipal.getPndEscritorio().add(frmExamenes);
-        frmPrincipal.getPndEscritorio().add(frmConsultar);
         frmPrincipal.getPndEscritorio().add(frmConsultar1);
         frmPrincipal.getPndEscritorio().add(frmActu);
         frmPrincipal.getPndEscritorio().add(frmBuscar);
         this.frmPrincipal.getOpcmMedico().addActionListener(this);
         this.frmPrincipal.getOpcmRegistrar().addActionListener(this);
-        this.frmPrincipal.getOpcmConsultar().addActionListener(this);
+        this.frmPrincipal.getOpcmBuscar().addActionListener(this);
+        this.frmPrincipal.getOpcmActualizar().addActionListener(this);
         this.frmPrincipal.getOpcmConsultarHistoria().addActionListener(this);
         this.frmPrincipal.getOpcmSalir().addActionListener(this);
         this.frmRegistrar.getBtnFechaSistema().addActionListener(this);
@@ -79,7 +77,6 @@ public class Controlador implements ActionListener, Runnable {
         this.frmExamenes.getBtnGrupo().add(frmExamenes.getBtnCorprologico());
         this.frmPrincipal.getBtnBuscar().addActionListener(this);
         this.frmPrincipal.getBtnConsultar().addActionListener(this);
-        this.frmPrincipal.getBtnConsultarHistoria().addActionListener(this);
         this.frmPrincipal.getBtnRegistrar().addActionListener(this);
         this.frmConsultar1.getBtnEliminar().addActionListener(this);
         this.frmConsultar1.getBtnEliminarID().addActionListener(this);
@@ -112,22 +109,11 @@ public class Controlador implements ActionListener, Runnable {
     @Override
     public void actionPerformed(ActionEvent ae) {
         if(ae.getSource() == frmPrincipal.getOpcmRegistrar()  || ae.getSource() == frmPrincipal.getBtnRegistrar()){
-            frmConsultar.getTblConsulta().setModel(conexionbd.consultar());
-            frmRegistrar.getTxtNro().setText(String.valueOf(frmConsultar.getTblConsulta().getRowCount() + 1));
+            frmConsultar1.getTblHistorias().setModel(conexionbd.consultarHistorias());
+            frmRegistrar.getTxtNro().setText(String.valueOf(frmConsultar1.getTblHistorias().getRowCount() + 1));
             abrirVentana(frmRegistrar);
         }
-        if(ae.getSource() == frmPrincipal.getOpcmConsultar()){//{
-            //try {
-                frmConsultar.getTblConsulta().setModel(conexionbd.consultar());
-                //agregarDatos(frmConsultar.getTblConsulta());
-                //agregarDatosPersistencia(frmConsultar.getTblConsulta());
-            //} catch (IOException ex) {
-              //  JOptionPane.showMessageDialog(frmPrincipal, "Error al abrir el archivo");
-            //}
-            frmConsultar.getTxtTotal().setText(String.valueOf(this.total));
-            abrirVentana(frmConsultar);
-        }
-        if(ae.getSource() == frmPrincipal.getOpcmConsultarHistoria())
+        if((ae.getSource() == frmPrincipal.getOpcmConsultarHistoria()) || ae.getSource() == frmPrincipal.getBtnConsultar())
         {
             abrirVentana(frmConsultar1);
             frmConsultar1.getTblHistorias().setModel(conexionbd.consultarHistorias());
@@ -147,7 +133,8 @@ public class Controlador implements ActionListener, Runnable {
             frmRegistrar.getTxtMes().setText(String.valueOf(fecha.getMm()));
             frmRegistrar.getTxtAno().setText(String.valueOf(fecha.getAa()));
         }
-        if(ae.getSource() == frmRegistrar.getBtnRegistrar()){
+        if((ae.getSource() == frmRegistrar.getBtnRegistrar()) || ae.getSource() == frmPrincipal.getBtnRegistrar())
+        {
             ArchPdf pdf = new ArchPdf();
             HistoriaClinica historia = new HistoriaClinica();
             Paciente objP = null;
@@ -339,7 +326,7 @@ public class Controlador implements ActionListener, Runnable {
             }
             case 2:{
                     abrirVentana(frmExamenes);//apertura
-                Laboratorios lab = new Laboratorios(null, (frmConsultar.getTblConsulta().getRowCount() + 1) , null, null);
+                Laboratorios lab = new Laboratorios(null, (frmConsultar1.getTblHistorias().getRowCount() + 1) , null, null);
                 try {
                     lab.setCodigo(Integer.parseInt(frmRegistrar.getTxtCodigo().getText()));
                     auxL.setCodigo(Integer.parseInt(frmRegistrar.getTxtCodigo().getText()));
@@ -406,7 +393,7 @@ public class Controlador implements ActionListener, Runnable {
                 try{
                     String msj = datos(objR.getListaH().size()-1);
                     conexionbd.setObjH(historia);
-                    String insertar = conexionbd.insertar();
+                    //String insertar = conexionbd.insertar();
                     
                     String insertar2 = conexionbd.insertar2();
                     if("Error al ingreso de datos, llave primaria (DNI) repetida".equals(insertar2))
@@ -416,24 +403,24 @@ public class Controlador implements ActionListener, Runnable {
                     else
                     {
                         JOptionPane.showMessageDialog(frmPrincipal, "Historia Clinica Registrada");
-                        frmRegistrar.getTxtNro().setText(String.valueOf(frmConsultar.getTblConsulta().getRowCount() + 1));
+                        frmRegistrar.getTxtNro().setText(String.valueOf(frmConsultar1.getTblHistorias().getRowCount() + 1));
                         frmRegistrar.getTxtAno().setText("");
                         frmRegistrar.getTxtDia().setText("");
                         frmRegistrar.getTxtMes().setText("");
                         frmRegistrar.getTxtIdentificacion().setText("");
                         frmRegistrar.getTxtTelefono().setText("");
                         frmRegistrar.getTxtaDescripcion().setText("");
-                        frmRegistrar.getTxtCodigo().setText(String.valueOf(frmConsultar.getTblConsulta().getRowCount() + 1));
+                        frmRegistrar.getTxtCodigo().setText(String.valueOf(frmConsultar1.getTblHistorias().getRowCount() + 1));
                         frmRegistrar.getTxtDireccion().setText("");
                         frmRegistrar.getTxtNombre().setText("");
                     }
-                    System.out.println(insertar);
+                    //System.out.println(insertar);
                     System.out.println(insertar2);
                     con.EscribeDatos(msj, "RegistroHospital.txt");
                     pdf.crear_PDF(historia, objP.getNombre());
                     JOptionPane.showMessageDialog(frmPrincipal, "Se ha generado un recibo en pdf");
                 }catch(IOException ex){
-                    JOptionPane.showMessageDialog(frmConsultar, "Error al abrir el archivo");
+                    JOptionPane.showMessageDialog(frmConsultar1, "Error al abrir el archivo");
                 }   
 
             }
@@ -492,7 +479,7 @@ public class Controlador implements ActionListener, Runnable {
             con.EscribeDatos(msj, "RegistroHospital.txt");
             pdf.crear_PDF((objR.getListaH().get(objR.getListaH().size()-1)),(objR.getListaH().get(objR.getListaH().size()-1)).getDtsPaciente().getNombre());
         }catch(IOException ex){
-            JOptionPane.showMessageDialog(frmConsultar, "Error al abrir el archivo");
+            JOptionPane.showMessageDialog(frmConsultar1, "Error al abrir el archivo");
         }
         frmExamenes.setVisible(false); 
      }
@@ -526,7 +513,7 @@ public class Controlador implements ActionListener, Runnable {
             String data = conexionbd.eliminar(elim);
             JOptionPane.showMessageDialog(frmPrincipal, data);
     }
-    if(ae.getSource() == frmConsultar1.getBtnActualizarID())
+    if(ae.getSource() == frmConsultar1.getBtnActualizarID() || ae.getSource() == frmPrincipal.getOpcmActualizar())
     {
             String bus = JOptionPane.showInputDialog(frmPrincipal, "ID Paciente: ");
             String data = conexionbd.buscar(bus);
@@ -550,7 +537,7 @@ public class Controlador implements ActionListener, Runnable {
                     frmActu.getCmbTipo().setSelectedIndex(3);
                     break;
             }
-            frmActu.setVisible(true);      
+            abrirVentana(frmActu);
     }
     if(ae.getSource() == frmActu.getBtnActualizar())
     {
@@ -574,6 +561,16 @@ public class Controlador implements ActionListener, Runnable {
             }
         data[4] = frmActu.getTxtTelefono().getText();
         JOptionPane.showMessageDialog(frmPrincipal, conexionbd.actualizar2(data));
+    }
+    if(ae.getSource() == frmPrincipal.getOpcmBuscar() || ae.getSource() == frmPrincipal.getBtnBuscar())
+    {
+        abrirVentana(frmBuscar);
+    }
+    if(ae.getSource() == frmBuscar.getBtnBuscar())
+    {
+        String data = conexionbd.buscar(frmBuscar.getjTextField1().getText());
+        frmBuscar.getjTextArea1().append(data);
+
     }
      
     }
@@ -650,13 +647,13 @@ public class Controlador implements ActionListener, Runnable {
     *Metodo para visualizar los datos en la tabla y obtener el total
     *@param tabla tabla donde se visualizan los datos
     */
-    public void agregarDatosPersistencia(JTable tabla) throws IOException{
+    /*public void agregarDatosPersistencia(JTable tabla) throws IOException{
         DefaultTableModel plantilla = (DefaultTableModel) tabla.getModel();
         plantilla.setRowCount(0);
         String datos = con.leerDatos("RegistroHospital.txt");
         archivoTabla(datos,frmConsultar.getTblConsulta());
         frmConsultar.getTxtTotal().setText(""+objR.recaudoTotal());
-    }
+    }*/
     
     /**
      * Método para abrir ventanas internas y controlar sus excepciones

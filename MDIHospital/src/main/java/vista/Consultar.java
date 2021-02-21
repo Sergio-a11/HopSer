@@ -61,6 +61,8 @@ public class Consultar extends javax.swing.JInternalFrame {
         btnEliminarID = new javax.swing.JButton();
         btnActualizarID = new javax.swing.JButton();
 
+        setClosable(true);
+
         tbdPaneHistorias.setTabPlacement(javax.swing.JTabbedPane.LEFT);
         tbdPaneHistorias.setToolTipText("");
 

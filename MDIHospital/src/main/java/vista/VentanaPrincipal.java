@@ -38,21 +38,22 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         pndEscritorio = new javax.swing.JDesktopPane();
         LabelDiseño = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
         jToolBar1 = new javax.swing.JToolBar();
         btnRegistrar = new javax.swing.JButton();
         btnConsultar = new javax.swing.JButton();
-        btnConsultarHistoria = new javax.swing.JButton();
         btnBuscar = new javax.swing.JButton();
+        jSeparator1 = new javax.swing.JToolBar.Separator();
         lblTxtHora = new javax.swing.JLabel();
+        jSeparator2 = new javax.swing.JToolBar.Separator();
         lblHora = new javax.swing.JLabel();
         mnBarra = new javax.swing.JMenuBar();
         MainMenuRegistrar = new javax.swing.JMenu();
         opcmRegistrar = new javax.swing.JMenuItem();
         opcmMedico = new javax.swing.JMenuItem();
         MainMenuConsultar = new javax.swing.JMenu();
-        opcmConsultar = new javax.swing.JMenuItem();
+        opcmBuscar = new javax.swing.JMenuItem();
         opcmConsultarHistoria = new javax.swing.JMenuItem();
+        opcmActualizar = new javax.swing.JMenuItem();
         MainMenuSalir = new javax.swing.JMenu();
         opcmSalir = new javax.swing.JMenuItem();
 
@@ -64,20 +65,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         pndEscritorio.add(LabelDiseño);
         LabelDiseño.setBounds(460, 280, 240, 30);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1200, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 30, Short.MAX_VALUE)
-        );
-
-        pndEscritorio.add(jPanel1);
-        jPanel1.setBounds(0, 620, 1200, 30);
-
+        jToolBar1.setFloatable(false);
         jToolBar1.setRollover(true);
 
         btnRegistrar.setText("Registrar");
@@ -92,12 +80,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         btnConsultar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar1.add(btnConsultar);
 
-        btnConsultarHistoria.setText("CHistoria");
-        btnConsultarHistoria.setFocusable(false);
-        btnConsultarHistoria.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnConsultarHistoria.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(btnConsultarHistoria);
-
         btnBuscar.setText("Buscar");
         btnBuscar.setFocusable(false);
         btnBuscar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -105,8 +87,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         btnBuscar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar1.add(btnBuscar);
 
+        jSeparator1.setOrientation(javax.swing.SwingConstants.HORIZONTAL);
+        jSeparator1.setSeparatorSize(new java.awt.Dimension(850, 10));
+        jToolBar1.add(jSeparator1);
+
         lblTxtHora.setText("Hora:");
         jToolBar1.add(lblTxtHora);
+        jToolBar1.add(jSeparator2);
 
         lblHora.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblHora.setText("00:00:00");
@@ -115,7 +102,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jToolBar1.add(lblHora);
 
         pndEscritorio.add(jToolBar1);
-        jToolBar1.setBounds(0, 570, 1200, 50);
+        jToolBar1.setBounds(0, 600, 1200, 50);
 
         MainMenuRegistrar.setText("Registrar");
 
@@ -130,12 +117,20 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         MainMenuConsultar.setText("Consultar");
 
-        opcmConsultar.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_DOWN_MASK));
-        opcmConsultar.setText("Consultar Paciente");
-        MainMenuConsultar.add(opcmConsultar);
+        opcmBuscar.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        opcmBuscar.setText("Buscar");
+        MainMenuConsultar.add(opcmBuscar);
 
-        opcmConsultarHistoria.setText("Consultar Historia Clinica");
+        opcmConsultarHistoria.setText("Consultar");
         MainMenuConsultar.add(opcmConsultarHistoria);
+
+        opcmActualizar.setText("Actualizar");
+        opcmActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                opcmActualizarActionPerformed(evt);
+            }
+        });
+        MainMenuConsultar.add(opcmActualizar);
 
         mnBarra.add(MainMenuConsultar);
 
@@ -165,6 +160,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void opcmActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcmActualizarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_opcmActualizarActionPerformed
 
     public JLabel getLabelDiseño() {
         return LabelDiseño;
@@ -206,14 +205,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         this.mnBarra = mnBarra;
     }
 
-    public JMenuItem getOpcmConsultar() {
-        return opcmConsultar;
-    }
-
-    public void setOpcmConsultar(JMenuItem opcmConsultar) {
-        this.opcmConsultar = opcmConsultar;
-    }
-
     public JMenuItem getOpcmRegistrar() {
         return opcmRegistrar;
     }
@@ -236,14 +227,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     public void setPndEscritorio(JDesktopPane pndEscritorio) {
         this.pndEscritorio = pndEscritorio;
-    }
-
-    public JPanel getjPanel1() {
-        return jPanel1;
-    }
-
-    public void setjPanel1(JPanel jPanel1) {
-        this.jPanel1 = jPanel1;
     }
 
     public JLabel getLblHora() {
@@ -278,14 +261,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         this.btnConsultar = btnConsultar;
     }
 
-    public JButton getBtnConsultarHistoria() {
-        return btnConsultarHistoria;
-    }
-
-    public void setBtnConsultarHistoria(JButton btnConsultarHistoria) {
-        this.btnConsultarHistoria = btnConsultarHistoria;
-    }
-
     public JButton getBtnRegistrar() {
         return btnRegistrar;
     }
@@ -317,6 +292,38 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     public void setOpcmMedico(JMenuItem opcmMedico) {
         this.opcmMedico = opcmMedico;
     }
+
+    public JToolBar.Separator getjSeparator1() {
+        return jSeparator1;
+    }
+
+    public void setjSeparator1(JToolBar.Separator jSeparator1) {
+        this.jSeparator1 = jSeparator1;
+    }
+
+    public JToolBar.Separator getjSeparator2() {
+        return jSeparator2;
+    }
+
+    public void setjSeparator2(JToolBar.Separator jSeparator2) {
+        this.jSeparator2 = jSeparator2;
+    }
+
+    public JMenuItem getOpcmActualizar() {
+        return opcmActualizar;
+    }
+
+    public void setOpcmActualizar(JMenuItem opcmActualizar) {
+        this.opcmActualizar = opcmActualizar;
+    }
+
+    public JMenuItem getOpcmBuscar() {
+        return opcmBuscar;
+    }
+
+    public void setOpcmBuscar(JMenuItem opcmBuscar) {
+        this.opcmBuscar = opcmBuscar;
+    }
     
     
 
@@ -327,14 +334,15 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu MainMenuSalir;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnConsultar;
-    private javax.swing.JButton btnConsultarHistoria;
     private javax.swing.JButton btnRegistrar;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JToolBar.Separator jSeparator1;
+    private javax.swing.JToolBar.Separator jSeparator2;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JLabel lblHora;
     private javax.swing.JLabel lblTxtHora;
     private javax.swing.JMenuBar mnBarra;
-    private javax.swing.JMenuItem opcmConsultar;
+    private javax.swing.JMenuItem opcmActualizar;
+    private javax.swing.JMenuItem opcmBuscar;
     private javax.swing.JMenuItem opcmConsultarHistoria;
     private javax.swing.JMenuItem opcmMedico;
     private javax.swing.JMenuItem opcmRegistrar;

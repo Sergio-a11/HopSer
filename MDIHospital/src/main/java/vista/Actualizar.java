@@ -46,6 +46,8 @@ public class Actualizar extends javax.swing.JInternalFrame {
         cmbTipo = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
 
+        setClosable(true);
+
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel1.setText("Actualizar Paciente");
 
