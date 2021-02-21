@@ -470,8 +470,78 @@ public class HospitalDAO {
         this.total = total;
     }
 
+    public String eliminar()
+    {
+        String msj = "";
+        try
+        {
+            ConexionBD conexion = new ConexionBD();
+            PreparedStatement consulta = null;
+            conexion.conectar();
+            //JOptionPane.showMessageDialog(null, objH.toString());
+            String comando = "delete from `paciente` where `id_paciente`='" + objH.getDtsPaciente().getIdentificacion()+ "'";
+            consulta = conexion.getConexion().prepareStatement(comando);
+            consulta.execute();
+            msj = "Registro eliminado";
+            consulta.close();
+            conexion.getConexion().close();
+        }catch(SQLException e)
+        {
+            msj = "Error al actualizar el registro " + e;
+        }
+        
+        return msj;
+    }
     
+    public String eliminar(String dni)
+    {
+        String msj = "";
+        try
+        {
+            ConexionBD conexion = new ConexionBD();
+            PreparedStatement consulta = null;
+            conexion.conectar();
+            //JOptionPane.showMessageDialog(null, objH.toString());
+            String comando = "delete from `paciente` where `id_paciente`='" + dni + "'";
+            consulta = conexion.getConexion().prepareStatement(comando);
+            consulta.execute();
+            msj = "Registro eliminado";
+            consulta.close();
+            conexion.getConexion().close();
+        }catch(SQLException e)
+        {
+            msj = "Error al actualizar el registro " + e;
+        }
+        
+        return msj;
+    }
     
+    public String actualizar()
+    {
+        String msj;
+        try
+        {
+            ConexionBD conexion = new ConexionBD();
+            PreparedStatement consulta = null;
+            conexion.conectar();
+            //JOptionPane.showMessageDialog(null, objH.toString());
+            String instruccion = "update `paciente` set `id_paciente`=?,`nombre`=?,`direccion`=?,`tipo_afiliacion`=?,`telefono`=? where `id_paciente`='" + objH.getDtsPaciente().getIdentificacion()+"'";
+            consulta = conexion.getConexion().prepareStatement(instruccion);
+            consulta.setString(1, objH.getDtsPaciente().getIdentificacion());
+            consulta.setString(2, objH.getDtsPaciente().getNombre());
+            consulta.setString(3, objH.getDtsPaciente().getDireccion());
+            consulta.setString(4, String.valueOf(objH.getDtsPaciente().afiliacion()));
+            consulta.setString(5, objH.getDtsPaciente().getTelefono());
+            consulta.execute();
+            msj = "Actualizacion realizada";
+            consulta.close();
+            conexion.getConexion().close();
+        }catch(SQLException e)
+        {
+            msj = "Error al actualizar el registro " + e;
+        }
+        return msj;
+    }
     
 
     @Override

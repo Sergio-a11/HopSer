@@ -75,6 +75,8 @@ public class Controlador implements ActionListener, Runnable {
         this.frmPrincipal.getBtnConsultar().addActionListener(this);
         this.frmPrincipal.getBtnConsultarHistoria().addActionListener(this);
         this.frmPrincipal.getBtnRegistrar().addActionListener(this);
+        //this.frmConsultar1.getBtnActualizar().addActionListener(this);
+        this.frmConsultar1.getBtnEliminar().addActionListener(this);
         examenes = new ArrayList<Examen>();
         auxH = new Hospitalizacion();
         auxL = new Laboratorios();
@@ -419,7 +421,7 @@ public class Controlador implements ActionListener, Runnable {
                     System.out.println(insertar);
                     System.out.println(insertar2);
                     con.EscribeDatos(msj, "RegistroHospital.txt");
-                    pdf.crear_PDF(historia);
+                    pdf.crear_PDF(historia, objP.getNombre());
                     JOptionPane.showMessageDialog(frmPrincipal, "Se ha generado un recibo en pdf");
                 }catch(IOException ex){
                     JOptionPane.showMessageDialog(frmConsultar, "Error al abrir el archivo");
@@ -479,7 +481,7 @@ public class Controlador implements ActionListener, Runnable {
             String insertar = conexionbd.insertar2();
             System.out.println(insertar);
             con.EscribeDatos(msj, "RegistroHospital.txt");
-            pdf.crear_PDF((objR.getListaH().get(objR.getListaH().size()-1)));
+            pdf.crear_PDF((objR.getListaH().get(objR.getListaH().size()-1)),(objR.getListaH().get(objR.getListaH().size()-1)).getDtsPaciente().getNombre());
         }catch(IOException ex){
             JOptionPane.showMessageDialog(frmConsultar, "Error al abrir el archivo");
         }
@@ -491,6 +493,31 @@ public class Controlador implements ActionListener, Runnable {
         String data = conexionbd.insertarMedico(med);
         JOptionPane.showMessageDialog(frmPrincipal, data);
      }
+     if(ae.getSource() == frmConsultar1.getBtnEliminar())
+     {
+        JTable tabla = frmConsultar1.getTblPacientes();
+          DefaultTableModel modeloDeMiTabla = (DefaultTableModel) tabla.getModel();
+              enviarDatosDAO();
+          
+          int resp=JOptionPane.showConfirmDialog(
+          null, "¿Desea eliminar el registro seleccionado?", "Advertencia", 0, JOptionPane.QUESTION_MESSAGE); 
+          if (resp==JOptionPane.YES_OPTION)
+          {
+              JOptionPane.showMessageDialog(frmPrincipal, this.conexionbd.eliminar());
+              modeloDeMiTabla.removeRow(tabla.getSelectedRow());
+          }
+          else
+          {
+              JOptionPane.showMessageDialog(frmPrincipal, "Registro NO eliminado");
+          }
+    }
+     /*if(ae.getSource() == frmConsultar1.getBtnActualizar())
+    {
+            enviarDatosDAO();
+            JOptionPane.showMessageDialog(frmPrincipal, this.conexionbd.actualizar());
+
+    }*/
+     
     }
     
     /**
@@ -674,5 +701,29 @@ public class Controlador implements ActionListener, Runnable {
         } catch (InterruptedException ex) {
             System.out.println("Error: " + ex.toString());
         }
+    }
+    
+    public void enviarDatosDAO()
+    {
+        int fila = frmConsultar1.getTblPacientes().getSelectedRow();
+        HistoriaClinica objH = new HistoriaClinica();
+        try {
+            objH.setNroHistoria(0);
+            objH.setFecha(new Fecha(12, 12, 2020));
+            objH.setDtsServicio(new Laboratorios(examenes, fila, "null", "null"));
+        } catch (FormatoEntradaExcepcion ex) {
+            Logger.getLogger(Controlador.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            objH.setDtsPaciente(new Sisben());
+        try {
+            objH.getDtsPaciente().setIdentificacion(frmConsultar1.getTblPacientes().getValueAt(fila, 0).toString());
+            objH.getDtsPaciente().setNombre(frmConsultar1.getTblPacientes().getValueAt(fila, 1).toString());
+            objH.getDtsPaciente().setDireccion(frmConsultar1.getTblPacientes().getValueAt(fila, 2).toString());
+            objH.getDtsPaciente().setTelefono(frmConsultar1.getTblPacientes().getValueAt(fila, 4).toString());
+            this.conexionbd.setObjH(objH);
+        } catch (FormatoEntradaExcepcion ex) {
+            ex.toString();
+        }
+        
     }
 }

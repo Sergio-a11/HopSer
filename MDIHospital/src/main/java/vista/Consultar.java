@@ -5,6 +5,7 @@
  */
 package vista;
 
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -41,6 +42,8 @@ public class Consultar extends javax.swing.JInternalFrame {
         pndPacientes = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblPacientes = new javax.swing.JTable();
+        btnEliminar = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         pndServicios = new javax.swing.JPanel();
         tbdPaneServicio = new javax.swing.JTabbedPane();
@@ -55,6 +58,8 @@ public class Consultar extends javax.swing.JInternalFrame {
         tblLabs = new javax.swing.JTable();
         lblTotal = new javax.swing.JLabel();
         txtTotal = new javax.swing.JTextField();
+        btnEliminarID = new javax.swing.JButton();
+        btnActualizarID = new javax.swing.JButton();
 
         tbdPaneHistorias.setTabPlacement(javax.swing.JTabbedPane.LEFT);
         tbdPaneHistorias.setToolTipText("");
@@ -128,21 +133,44 @@ public class Consultar extends javax.swing.JInternalFrame {
         });
         jScrollPane2.setViewportView(tblPacientes);
 
+        btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setText("Selecciona un registro para eliminar");
+
         javax.swing.GroupLayout pndPacientesLayout = new javax.swing.GroupLayout(pndPacientes);
         pndPacientes.setLayout(pndPacientesLayout);
         pndPacientesLayout.setHorizontalGroup(
             pndPacientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pndPacientesLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 532, Short.MAX_VALUE)
+                .addGroup(pndPacientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pndPacientesLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 532, Short.MAX_VALUE))
+                    .addGroup(pndPacientesLayout.createSequentialGroup()
+                        .addGap(229, 229, 229)
+                        .addComponent(btnEliminar)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pndPacientesLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(165, 165, 165))
         );
         pndPacientesLayout.setVerticalGroup(
             pndPacientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pndPacientesLayout.createSequentialGroup()
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnEliminar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel1)
+                .addContainerGap(11, Short.MAX_VALUE))
         );
 
         tbdPaneHistorias.addTab("Pacientes", pndPacientes);
@@ -314,6 +342,22 @@ public class Consultar extends javax.swing.JInternalFrame {
 
         lblTotal.setText("Total:");
 
+        txtTotal.setEditable(false);
+
+        btnEliminarID.setText("Eliminar por ID Paciente");
+        btnEliminarID.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarIDActionPerformed(evt);
+            }
+        });
+
+        btnActualizarID.setText("Actualizar por ID Paciente");
+        btnActualizarID.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarIDActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -322,28 +366,50 @@ public class Consultar extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(39, 39, 39)
-                        .addComponent(tbdPaneHistorias, javax.swing.GroupLayout.PREFERRED_SIZE, 660, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(tbdPaneHistorias, javax.swing.GroupLayout.PREFERRED_SIZE, 660, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(113, 113, 113)
+                                .addComponent(btnEliminarID, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnActualizarID, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(272, 272, 272)
+                        .addGap(270, 270, 270)
                         .addComponent(lblTotal)
-                        .addGap(35, 35, 35)
+                        .addGap(31, 31, 31)
                         .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(49, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(31, 31, 31)
-                .addComponent(tbdPaneHistorias, javax.swing.GroupLayout.PREFERRED_SIZE, 464, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(5, 5, 5)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblTotal)
                     .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tbdPaneHistorias, javax.swing.GroupLayout.PREFERRED_SIZE, 464, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnEliminarID)
+                    .addComponent(btnActualizarID))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnEliminarIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarIDActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEliminarIDActionPerformed
+
+    private void btnActualizarIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarIDActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnActualizarIDActionPerformed
 
     public JPanel getjPanel5() {
         return jPanel5;
@@ -512,10 +578,24 @@ public class Consultar extends javax.swing.JInternalFrame {
     public void setTxtTotal(JTextField txtTotal) {
         this.txtTotal = txtTotal;
     }
+
+    public JButton getBtnEliminar() {
+        return btnEliminar;
+    }
+
+    public void setBtnEliminar(JButton btnEliminar) {
+        this.btnEliminar = btnEliminar;
+    }
+
+    
     
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnActualizarID;
+    private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnEliminarID;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;

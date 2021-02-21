@@ -39,13 +39,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         pndEscritorio = new javax.swing.JDesktopPane();
         LabelDiseño = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        lblHora = new javax.swing.JLabel();
-        lblTxtHora = new javax.swing.JLabel();
         jToolBar1 = new javax.swing.JToolBar();
         btnRegistrar = new javax.swing.JButton();
         btnConsultar = new javax.swing.JButton();
         btnConsultarHistoria = new javax.swing.JButton();
         btnBuscar = new javax.swing.JButton();
+        lblTxtHora = new javax.swing.JLabel();
+        lblHora = new javax.swing.JLabel();
         mnBarra = new javax.swing.JMenuBar();
         MainMenuRegistrar = new javax.swing.JMenu();
         opcmRegistrar = new javax.swing.JMenuItem();
@@ -64,35 +64,20 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         pndEscritorio.add(LabelDiseño);
         LabelDiseño.setBounds(460, 280, 240, 30);
 
-        lblHora.setText("00:00:00");
-
-        lblTxtHora.setText("Hora:");
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(1075, Short.MAX_VALUE)
-                .addComponent(lblTxtHora)
-                .addGap(18, 18, 18)
-                .addComponent(lblHora)
-                .addGap(29, 29, 29))
+            .addGap(0, 1200, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(8, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblHora)
-                    .addComponent(lblTxtHora))
-                .addContainerGap())
+            .addGap(0, 30, Short.MAX_VALUE)
         );
 
         pndEscritorio.add(jPanel1);
         jPanel1.setBounds(0, 620, 1200, 30);
 
-        jToolBar1.setOrientation(javax.swing.SwingConstants.VERTICAL);
         jToolBar1.setRollover(true);
 
         btnRegistrar.setText("Registrar");
@@ -120,8 +105,17 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         btnBuscar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar1.add(btnBuscar);
 
+        lblTxtHora.setText("Hora:");
+        jToolBar1.add(lblTxtHora);
+
+        lblHora.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblHora.setText("00:00:00");
+        lblHora.setAutoscrolls(true);
+        lblHora.setIconTextGap(8);
+        jToolBar1.add(lblHora);
+
         pndEscritorio.add(jToolBar1);
-        jToolBar1.setBounds(1120, 0, 80, 620);
+        jToolBar1.setBounds(0, 570, 1200, 50);
 
         MainMenuRegistrar.setText("Registrar");
 

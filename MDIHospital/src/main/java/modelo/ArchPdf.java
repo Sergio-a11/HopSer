@@ -32,23 +32,25 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  */
 public class ArchPdf {
 
-    private File ruta_destino;
+    //private File ruta_destino;
 
     public ArchPdf(){
-        ruta_destino=null;
+        //ruta_destino=null;
     }
 
     /* metodo que hace uso de la clase itext para manipular archivos PDF*/
-    public void crear_PDF(HistoriaClinica hs){
+    public void crear_PDF(HistoriaClinica hs, String ruta){
         //abre ventana de dialogo "guardar"
-        Colocar_Destino();
+        //Colocar_Destino();
+        
         //si destino es diferente de null
-        if(this.ruta_destino!=null){
+        if(ruta!=null){
             try {
                 // se crea instancia del documento
                 Document mipdf = new Document();
                 // se establece una instancia a un documento pdf
-                PdfWriter pw=PdfWriter.getInstance(mipdf, new FileOutputStream(this.ruta_destino + ".pdf"));
+                //cambiar hay? y ya?
+                PdfWriter pw=PdfWriter.getInstance(mipdf, new FileOutputStream(ruta + ".pdf"));
                 mipdf.open();// se abre el documento
                 mipdf.addTitle("Recibo de Historia Clinica"); // se añade el titulo
                 /*mipdf.addAuthor(a); // se añade el autor del documento
@@ -84,7 +86,7 @@ public class ArchPdf {
         }
     }
     /* abre la ventana de dialogo GUARDAR*/
-    public void Colocar_Destino(){
+    /*public void Colocar_Destino(){
        FileNameExtensionFilter filter = new FileNameExtensionFilter("Archivo PDF","pdf","PDF");
        JFileChooser fileChooser = new JFileChooser();
        fileChooser.setFileFilter(filter);
@@ -92,7 +94,7 @@ public class ArchPdf {
        if ( result == JFileChooser.APPROVE_OPTION ){
            this.ruta_destino = fileChooser.getSelectedFile().getAbsoluteFile();
         }
-    }
+    }*/
     public Image codBar(Document doc, PdfWriter pw, String InfoCod)
     {
         PdfContentByte cimg = pw.getDirectContent();
@@ -104,13 +106,13 @@ public class ArchPdf {
         img.setAlignment(Element.ALIGN_CENTER);
         return img;
     }
-    public File getRuta_destino() {
+    /*public File getRuta_destino() {
         return ruta_destino;
     }
 
     public void setRuta_destino(File ruta_destino) {
         this.ruta_destino = ruta_destino;
-    }
+    }*/
     
     public Image QRcod(Document doc, String InfoCod) throws BadElementException
     {
