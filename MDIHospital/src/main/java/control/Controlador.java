@@ -5,6 +5,7 @@
 */
 package control;
 
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyVetoException;
@@ -13,6 +14,8 @@ import static java.lang.Thread.sleep;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -97,6 +100,7 @@ public class Controlador implements ActionListener, Runnable {
      */
     public void iniciar(){
         frmPrincipal.setTitle("Hospital");
+        iconos();
         frmPrincipal.setVisible(true);
         hilo1.start();
         
@@ -109,8 +113,10 @@ public class Controlador implements ActionListener, Runnable {
     @Override
     public void actionPerformed(ActionEvent ae) {
         if(ae.getSource() == frmPrincipal.getOpcmRegistrar()  || ae.getSource() == frmPrincipal.getBtnRegistrar()){
-            frmConsultar1.getTblHistorias().setModel(conexionbd.consultarHistorias());
-            frmRegistrar.getTxtNro().setText(String.valueOf(frmConsultar1.getTblHistorias().getRowCount() + 1));
+            
+            frmRegistrar.getTxtNro().setText(String.valueOf(conexionbd.nHistoria() + 1));
+            frmRegistrar.getTxtNro().setEditable(false);
+            frmRegistrar.getTxtCodigo().setText(String.valueOf(conexionbd.nHistoria() + 1));
             abrirVentana(frmRegistrar);
         }
         if((ae.getSource() == frmPrincipal.getOpcmConsultarHistoria()) || ae.getSource() == frmPrincipal.getBtnConsultar())
@@ -403,14 +409,14 @@ public class Controlador implements ActionListener, Runnable {
                     else
                     {
                         JOptionPane.showMessageDialog(frmPrincipal, "Historia Clinica Registrada");
-                        frmRegistrar.getTxtNro().setText(String.valueOf(frmConsultar1.getTblHistorias().getRowCount() + 1));
+                        frmRegistrar.getTxtNro().setText(String.valueOf(conexionbd.nHistoria() + 1));
                         frmRegistrar.getTxtAno().setText("");
                         frmRegistrar.getTxtDia().setText("");
                         frmRegistrar.getTxtMes().setText("");
                         frmRegistrar.getTxtIdentificacion().setText("");
                         frmRegistrar.getTxtTelefono().setText("");
                         frmRegistrar.getTxtaDescripcion().setText("");
-                        frmRegistrar.getTxtCodigo().setText(String.valueOf(frmConsultar1.getTblHistorias().getRowCount() + 1));
+                        frmRegistrar.getTxtCodigo().setText(String.valueOf(conexionbd.nHistoria() + 1));
                         frmRegistrar.getTxtDireccion().setText("");
                         frmRegistrar.getTxtNombre().setText("");
                     }
@@ -478,6 +484,17 @@ public class Controlador implements ActionListener, Runnable {
             System.out.println(insertar);
             con.EscribeDatos(msj, "RegistroHospital.txt");
             pdf.crear_PDF((objR.getListaH().get(objR.getListaH().size()-1)),(objR.getListaH().get(objR.getListaH().size()-1)).getDtsPaciente().getNombre());
+            JOptionPane.showMessageDialog(frmPrincipal, "Historia Clinica Registrada");
+            frmRegistrar.getTxtNro().setText(String.valueOf(conexionbd.nHistoria() + 1));
+            frmRegistrar.getTxtAno().setText("");
+            frmRegistrar.getTxtDia().setText("");
+            frmRegistrar.getTxtMes().setText("");
+            frmRegistrar.getTxtIdentificacion().setText("");
+            frmRegistrar.getTxtTelefono().setText("");
+            frmRegistrar.getTxtaDescripcion().setText("");
+            frmRegistrar.getTxtCodigo().setText(String.valueOf(conexionbd.nHistoria() + 1));
+            frmRegistrar.getTxtDireccion().setText("");
+            frmRegistrar.getTxtNombre().setText("");
         }catch(IOException ex){
             JOptionPane.showMessageDialog(frmConsultar1, "Error al abrir el archivo");
         }
@@ -780,5 +797,13 @@ public class Controlador implements ActionListener, Runnable {
             ex.toString();
         }
         
+    }
+    
+    public void iconos()
+    {
+        ImageIcon imgIcon8 = new ImageIcon("C:\\Users\\Usuario\\Desktop\\MDIHospital_Sergio\\HopSer\\MDIHospital\\src\\main\\java\\imagenes\\lupa.png");
+        Icon icono8 = new ImageIcon(imgIcon8.getImage().getScaledInstance(frmPrincipal.getBtnBuscar().getWidth(), frmPrincipal.getBtnBuscar().getHeight() , Image.SCALE_DEFAULT));//como se va a abriri la imagen
+        frmPrincipal.getBtnBuscar().setIcon(icono8);//se establece la imagen en el label
+        frmPrincipal.getBtnBuscar().setText("");
     }
 }

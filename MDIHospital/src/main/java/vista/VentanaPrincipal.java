@@ -87,7 +87,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         btnBuscar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar1.add(btnBuscar);
 
-        jSeparator1.setOrientation(javax.swing.SwingConstants.HORIZONTAL);
         jSeparator1.setSeparatorSize(new java.awt.Dimension(850, 10));
         jToolBar1.add(jSeparator1);
 

@@ -568,6 +568,27 @@ public class HospitalDAO {
         return msj;
     }
 
+    public int nHistoria()
+    {
+        int max = 0;
+        try
+        {
+            ConexionBD conexion = new ConexionBD();
+            conexion.conectar();
+            Statement consulta = conexion.getConexion().createStatement();
+            ResultSet datos2 = consulta.executeQuery("select MAX(id_historia) from historia_clinica");//devuelve el resultado a de la consulta a bd
+            datos2.next();
+            max = Integer.parseInt(datos2.getString(1));
+            //msj = "Actualizacion realizada";
+            consulta.close();
+            conexion.getConexion().close();
+            datos2.close();
+        }catch(SQLException e)
+        {
+            JOptionPane.showMessageDialog(null, e.toString());
+        }
+        return max;
+    }
     @Override
     public String toString() {
         return objH.toString();

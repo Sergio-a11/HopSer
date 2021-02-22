@@ -167,7 +167,6 @@
             </Component>
             <Component class="javax.swing.JToolBar$Separator" name="jSeparator1">
               <Properties>
-                <Property name="orientation" type="int" value="0"/>
                 <Property name="separatorSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                   <Dimension value="[850, 10]"/>
                 </Property>
